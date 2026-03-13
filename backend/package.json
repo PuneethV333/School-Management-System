@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "bcrypt-ts": "^8.0.1",
     "compression": "^1.8.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
@@ -20,7 +22,8 @@
     "express-rate-limit": "^8.3.1",
     "helmet": "^8.1.0",
     "mongoose": "^9.3.0",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "redis": "^5.11.0"
   },
   "devDependencies": {
     "@types/compression": "^1.8.1",

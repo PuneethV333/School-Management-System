@@ -1,4 +1,4 @@
-import mongoose,{Schema,Document} from "mongoose";
+import mongoose,{Schema,Document, Model} from "mongoose";
 
 
 export interface lesson {
@@ -53,7 +53,7 @@ export interface syllabus extends Document {
 }
 
 
-const syllabusSchema = new mongoose.Schema({
+const syllabusSchema = new Schema<syllabus>({
     classNo:{
         type:Number,
         required:true
@@ -63,4 +63,4 @@ const syllabusSchema = new mongoose.Schema({
 syllabusSchema.index({ classNo: 1 });
 syllabusSchema.index({ "syllabus.subject": 1 });
 
-export default mongoose.model("Syllabus", syllabusSchema,"syllabuses");
+const Syllabus : Model<syllabus> = mongoose.models.Syllabus ||mongoose.model("Syllabus", syllabusSchema,"syllabuses");

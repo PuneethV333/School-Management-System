@@ -1,4 +1,4 @@
-import mongoose,{Schema,Document} from "mongoose";
+import mongoose,{Schema,Document, Model} from "mongoose";
 
 export interface authority extends Document{
     name:string;
@@ -103,4 +103,6 @@ const authoritySchema = new Schema<authority>(
   { timestamps: true }
 );
 
-export default mongoose.model<authority>("Authority", authoritySchema, "authorities");
+const Authority: Model<authority> = mongoose.models.Authority || mongoose.model<authority>("Authority", authoritySchema);
+
+export default Authority

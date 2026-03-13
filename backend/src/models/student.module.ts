@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document,Model } from "mongoose";
 
 
 
@@ -265,8 +265,10 @@ studentSchema.virtual("age").get(function (this: IStudent): number {
 
 
 
-export default mongoose.model<IStudent>(
+const Student : Model<IStudent> = mongoose.models.Student || mongoose.model<IStudent>(
     "Student",
     studentSchema,
     "students"
 );
+
+export default Student

@@ -1,4 +1,4 @@
-import mongoose,{Schema,Document} from "mongoose";
+import mongoose,{Schema,Document, Model, model} from "mongoose";
 
 
 export interface Assessment {
@@ -116,4 +116,6 @@ marksSchema.index(
 );
 marksSchema.index({ class: 1, academicYear: 1 });
 
-export default mongoose.model<IMarksSchema>("Marks", marksSchema,"marks");
+const Marks : Model<IMarksSchema> =mongoose.models.Marks ||  mongoose.model<IMarksSchema>("Marks", marksSchema);
+
+export default Marks

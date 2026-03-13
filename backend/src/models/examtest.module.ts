@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface Assessment {
     type: "SA-1" | "SA-2" | "FA-1" | "FA-2" | "FA-3" | "FA-4";
@@ -117,8 +117,9 @@ const examTestSchema = new Schema<IExamTest>(
     { timestamps: true }
 );
 
-export default mongoose.model<IExamTest>(
+const ExamTest : Model<IExamTest> = mongoose.models.ExamTest ||mongoose.model<IExamTest>(
     "ExamTest",
-    examTestSchema,
-    "examtests"
+    examTestSchema
 );
+
+export default ExamTest

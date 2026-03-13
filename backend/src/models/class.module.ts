@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
 type DayName =
     | "Monday"
@@ -157,4 +157,4 @@ classSchema.virtual("totalStudents").get(function (this: IClass) {
 classSchema.index({ classNo: 1, section: 1, academicYear: 1 }, { unique: true });
 classSchema.index({ classTeacher: 1 });
 
-export default mongoose.model<IClass>("Class", classSchema, "classes");
+const Class : Model<IClass> = mongoose.models.Class || mongoose.model<IClass>("Class", classSchema, "classes");

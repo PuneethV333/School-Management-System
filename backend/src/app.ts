@@ -6,6 +6,7 @@ import compression from "compression"
 import rateLimit from "express-rate-limit"
 import morgan from "morgan"
 import cookieParser from "cookie-parser"
+import { errorHanding } from "./middleware/errorHandling.middleware"
 
 dotenv.config()
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(helmet())
 app.use(cookieParser())
 app.use(compression())
+app.use(errorHanding)
 
 app.use(
   cors({
@@ -24,6 +26,14 @@ app.use(
     credentials: true
   })
 )
+
+
+app.use((req:Request,res:Response) => {
+    res.status(404).json({
+        success:false,
+        message:"Router not found"
+    })
+})
 
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }))
 

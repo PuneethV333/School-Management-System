@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { Model } from "mongoose";
 
 interface Attachment {
   fileName: string;
@@ -85,7 +86,8 @@ announcementSchema.index({
   academicYear: 1,
 });
 
-export default mongoose.model<IAnnouncement>(
-  "Announcement",
-  announcementSchema
-);
+const announcements :Model<IAnnouncement> = 
+    mongoose.models.announcements || mongoose.model<IAnnouncement>("announcements",announcementSchema)
+    
+
+export default announcements

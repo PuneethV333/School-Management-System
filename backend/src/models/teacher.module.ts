@@ -1,4 +1,4 @@
-import mongoose,{Schema,Document} from "mongoose";
+import mongoose,{Schema,Document, Model} from "mongoose";
 
 export interface teacher extends Document{
   name:string
@@ -124,4 +124,5 @@ const teacherSchema = new Schema<teacher>(
   {timestamps: true}
 );
 
-export default mongoose.model("Teacher", teacherSchema,"teachers"); 
+const Teacher : Model<teacher> = mongoose.models.Teacher || mongoose.model("Teacher", teacherSchema,"teachers"); 
+export default Teacher

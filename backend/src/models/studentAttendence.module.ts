@@ -1,8 +1,6 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import CalendarOfEvents from "./calendarOfEvents.module";
 
-
-
 export interface IDay {
   date: Date;
   status: "PRESENT" | "ABSENT" | "HOLIDAY" | "LEAVE" | null;
@@ -233,8 +231,9 @@ function getISOWeek(date: Date): number {
 
 
 
-export default mongoose.model<IStudentAttendance, StudentAttendanceModel>(
+const StudentAttendance : Model<IStudentAttendance> = mongoose.models.student || mongoose.model<IStudentAttendance, StudentAttendanceModel>(
   "StudentAttendance",
-  studentAttendanceSchema,
-  "studentattendances"
+  studentAttendanceSchema
 );
+
+export default StudentAttendance
