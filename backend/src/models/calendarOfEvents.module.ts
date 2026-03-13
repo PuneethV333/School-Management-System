@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface day {
     date: Date;
@@ -50,7 +50,14 @@ const CalendarOfEventsSchema = new Schema<CalendarOfEvent>(
     { timestamps: true }
 );
 
-export default mongoose.model<CalendarOfEvent>(
-    "CalendarOfEvents",
-    CalendarOfEventsSchema
-);
+
+
+
+const CalendarOfEvents: Model<CalendarOfEvent> =
+    mongoose.models.CalendarOfEvents ||
+    mongoose.model<CalendarOfEvent>(
+        "CalendarOfEvents",
+        CalendarOfEventsSchema
+    );
+
+export default CalendarOfEvents;
