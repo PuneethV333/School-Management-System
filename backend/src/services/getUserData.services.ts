@@ -1,7 +1,7 @@
 import Student from "../models/student.module";
 import Teacher from "../models/teacher.module";
 import Authority from "../models/authority.module";
-import { redisClient } from "../config/redis";
+import { setValKey } from "../utils/redis.utils";
 
 
 export interface getUserDateInput {
@@ -27,9 +27,9 @@ export const getUserData = async ({ authId, role }: getUserDateInput) => {
             throw new Error("Invalid userData")
         }
         
-        await redisClient.set("userData",JSON.stringify(userData),{
-            EX:3600
-        });
+        const cacheKey = "userData" as string
+        
+        await setValKey(cacheKey,JSON.stringify(userData),3600)
 
         return userData;
     } catch (err: any) {

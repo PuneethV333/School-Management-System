@@ -9,6 +9,7 @@ import { getError } from "../utils/error.utils";
 import { createToken } from "../utils/jwt.utils";
 
 import { AuthToken } from "../middleware/auth.middleware";
+import { setValKey } from "../utils/redis.utils";
 
 export interface loginBody {
   authId: string;
@@ -50,9 +51,9 @@ export const login = async (req: Request, res: Response) => {
 
     const token = createToken(payload);
 
-    await redisClient.set(`session:${token}`, JSON.stringify(data), {
-      EX: 3600,
-    });
+    const cacheKey = `session:${token}` as string;
+
+    await setValKey(cacheKey, JSON.stringify(data), 3600);
 
     res.cookie("token", token, {
       httpOnly: true,

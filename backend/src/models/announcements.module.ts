@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { Model } from "mongoose";
 
-interface Attachment {
+export interface Attachment {
   fileName: string;
   fileUrl: string;
 }
@@ -11,7 +11,7 @@ export interface IAnnouncement extends Document {
   content: string;
   category: "General" | "Exam" | "Holiday" | "Event" | "Fee" | "Emergency";
   classes: number[];
-  attachments: Attachment[];
+  attachments?: Attachment[];
   academicYear: string;
   publishAt: Date;
   expireAt?: Date;

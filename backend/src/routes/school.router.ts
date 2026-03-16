@@ -5,8 +5,3 @@ import authMiddleware from "../middleware/auth.middleware";
 export const schoolRouter = Router();
 
 schoolRouter.get("/schoolInfo", authMiddleware, schoolController.getSchoolInfo);
-schoolRouter.get(
-  "/get/announcements/home",
-  authMiddleware,
-  schoolController.getAnnouncementsHomePage,
-);
