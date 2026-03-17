@@ -3,7 +3,8 @@ import * as announcementsController from '../controllers/announcements.controlle
 import authMiddleware from "../middleware/auth.middleware";
 
 
-const announcementsRoute = Router()
+export const announcementsRoute = Router()
 
 
 announcementsRoute.get('/announcements',authMiddleware,announcementsController.getAnnouncements)
+announcementsRoute.post('/addAnnouncement',authMiddleware,announcementsController.postAnnouncements)

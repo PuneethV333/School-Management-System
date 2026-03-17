@@ -158,3 +158,4 @@ classSchema.index({ classNo: 1, section: 1, academicYear: 1 }, { unique: true })
 classSchema.index({ classTeacher: 1 });
 
 const Class : Model<IClass> = mongoose.models.Class || mongoose.model<IClass>("Class", classSchema, "classes");
+export default  Class

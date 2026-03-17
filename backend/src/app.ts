@@ -10,7 +10,9 @@ import cookieParser from "cookie-parser";
 import { errorHanding } from "./middleware/errorHandling.middleware";
 import { redisMiddleware } from "./middleware/redis.middleware";
 import { authRouter } from "./routes/auth.router";
+import { studentRouter } from "./routes/students.routers";
 import { schoolRouter } from "./routes/school.router";
+import { announcementsRoute } from "./routes/announcements.route";
 
 dotenv.config();
 
@@ -43,6 +45,8 @@ app.use(redisMiddleware);
 
 app.use("/auth", authRouter);
 app.use("/school", schoolRouter);
+app.use("/student", studentRouter);
+app.use("/announcement", announcementsRoute);
 
 app.get("/test", (_: Request, res: Response) => {
   res.send("Server is running");

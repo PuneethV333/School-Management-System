@@ -19,7 +19,7 @@ export const getAnnouncements = async (req: Request, res: Response) => {
     const page = 1;
     const limit = 5;
 
-    const academicYear = process.env.CURRENT_ACADEMIC_YEAR as string;
+    const academicYear = process.env.CURRENT_ACADEMIC_YEAR ;
 
     if (!academicYear) {
       throw new Error("Academic year not found");
@@ -114,7 +114,7 @@ export const postAnnouncements = async (req: Request, res: Response) => {
 
     const cacheKey = `announcements:home:${academicYear}:${page}:${limit}`;
 
-    const cached = await redisClient.del(cacheKey);
+    await redisClient.del(cacheKey);
 
     const response = {
       success: true,

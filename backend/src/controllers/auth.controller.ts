@@ -9,7 +9,7 @@ import { getError } from "../utils/error.utils";
 import { createToken } from "../utils/jwt.utils";
 
 import { AuthToken } from "../middleware/auth.middleware";
-import { setValKey } from "../utils/redis.utils";
+import { getVal, setValKey } from "../utils/redis.utils";
 
 export interface loginBody {
   authId: string;
@@ -103,7 +103,8 @@ export const getMe = async (req: Request, res: Response) => {
       });
     }
 
-    const session = await redisClient.get(`session:${token}`);
+    const cacheKey = `session:${token}`;
+    const session = await getVal(cacheKey);
 
     if (!session) {
       return res.status(401).json({

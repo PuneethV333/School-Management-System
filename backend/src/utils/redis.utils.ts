@@ -7,3 +7,17 @@ export const setValKey = async (key: string, data: string, Exp = 300) => {
 
   await redisClient.set(key, data, { EX: Exp });
 };
+
+export const getVal = async (cacheToken: string) => {
+  try {
+    if (!cacheToken) {
+      throw new Error("give cache token");
+    }
+
+    const res = await redisClient.get(cacheToken);
+    return res;
+  } catch (err) {
+    return null;
+  }
+};
+
