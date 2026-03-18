@@ -210,7 +210,6 @@ export const changeProfilePic = async (req: Request, res: Response) => {
       const cacheKey = `session:${token}`;
 
       await redisClient.del(cacheKey);
-      await setValKey(cacheKey, JSON.stringify(response), 3600);
     }
 
     return res.status(200).json({
