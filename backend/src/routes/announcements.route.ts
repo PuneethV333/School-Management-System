@@ -6,5 +6,5 @@ import authMiddleware from "../middleware/auth.middleware";
 export const announcementsRoute = Router()
 
 
-announcementsRoute.get('/announcements',authMiddleware,announcementsController.getAnnouncements)
-announcementsRoute.post('/addAnnouncement',authMiddleware,announcementsController.postAnnouncements)
+announcementsRoute.get('/',authMiddleware,announcementsController.getAnnouncements)
+announcementsRoute.post('/',authMiddleware,announcementsController.postAnnouncements)

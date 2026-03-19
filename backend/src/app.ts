@@ -13,6 +13,8 @@ import { authRouter } from "./routes/auth.router";
 import { studentRouter } from "./routes/students.routers";
 import { schoolRouter } from "./routes/school.router";
 import { announcementsRoute } from "./routes/announcements.route";
+import { teacherRouter } from "./routes/teacher.router";
+import { academicRouter } from "./routes/academic.router";
 
 dotenv.config();
 
@@ -47,6 +49,8 @@ app.use("/auth", authRouter);
 app.use("/school", schoolRouter);
 app.use("/student", studentRouter);
 app.use("/announcement", announcementsRoute);
+app.use("/teachers", teacherRouter);
+app.use("/academic", academicRouter);
 
 app.get("/test", (_: Request, res: Response) => {
   res.send("Server is running");
