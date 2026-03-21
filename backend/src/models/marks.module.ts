@@ -1,20 +1,18 @@
-import mongoose,{Schema,Document, Model, model} from "mongoose";
-
+import mongoose, { Schema, Document, Model, model, Types } from "mongoose";
 
 export interface Assessment {
-    type: string;
-    name:string;
-    marksObtained: number;
-    maxMarks: number;
-    examDate: Date;
+  type: string;
+  name: string;
+  marksObtained: number;
+  maxMarks: number;
+  examDate: Date;
 }
-
 
 const assessmentSchema = new Schema<Assessment>(
   {
     type: {
       type: String,
-      default:"UT",
+      default: "UT",
       required: true,
     },
     name: {
@@ -27,7 +25,7 @@ const assessmentSchema = new Schema<Assessment>(
       required: true,
       min: 0,
       validate: {
-        validator: function (v:number) {
+        validator: function (v: number) {
           return v <= (this as any).maxMarks;
         },
         message: "Marks obtained cannot exceed max marks",
@@ -43,12 +41,12 @@ const assessmentSchema = new Schema<Assessment>(
       required: true,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 export interface Subject {
-    subject: string;
-    assessments: Assessment[];
+  subject: string;
+  assessments: Assessment[];
 }
 
 const subjectSchema = new Schema<Subject>(
@@ -61,18 +59,17 @@ const subjectSchema = new Schema<Subject>(
     },
     assessments: [assessmentSchema],
   },
-  { _id: false }
+  { _id: false },
 );
 
-export interface IMarksSchema extends Document{
-    studentId:mongoose.Schema.Types.ObjectId
-    class:number
-    section:string
-    academicYear:string
-    subjects:Subject[]
-    publishedAt:Date
+export interface IMarksSchema extends Document {
+  studentId: Types.ObjectId;
+  class: number;
+  section: string;
+  academicYear: string;
+  subjects: Subject[];
+  publishedAt: Date;
 }
-
 
 const marksSchema = new Schema<IMarksSchema>(
   {
@@ -98,8 +95,8 @@ const marksSchema = new Schema<IMarksSchema>(
     subjects: {
       type: [subjectSchema],
       validate: {
-        validator: function (subjects:Subject[]) {
-          const names = subjects.map((s:Subject) => s.subject);
+        validator: function (subjects: Subject[]) {
+          const names = subjects.map((s: Subject) => s.subject);
           return names.length === new Set(names).size;
         },
         message: "Duplicate subjects are not allowed",
@@ -107,15 +104,16 @@ const marksSchema = new Schema<IMarksSchema>(
     },
     publishedAt: Date,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 marksSchema.index(
   { studentId: 1, class: 1, academicYear: 1 },
-  { unique: true }
+  { unique: true },
 );
 marksSchema.index({ class: 1, academicYear: 1 });
 
-const Marks : Model<IMarksSchema> =mongoose.models.Marks ||  mongoose.model<IMarksSchema>("Marks", marksSchema);
+const Marks: Model<IMarksSchema> =
+  mongoose.models.Marks || mongoose.model<IMarksSchema>("Marks", marksSchema);
 
-export default Marks
+export default Marks;
