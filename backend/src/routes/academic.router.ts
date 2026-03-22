@@ -4,6 +4,6 @@ import authMiddleware from "../middleware/auth.middleware";
 
 export const academicRouter = Router()
 
-academicRouter.get('/timetable',authMiddleware,academicController.getTimeTableByClass)
-academicRouter.get('/syllabus',authMiddleware,academicController.getSyllabus)
+academicRouter.get('/timetable/:classNo',authMiddleware,academicController.getTimeTableByClass)
+academicRouter.get('/syllabus/:subject',authMiddleware,academicController.getSyllabus)
 

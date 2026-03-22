@@ -78,8 +78,8 @@ export const getStudentsByClass = async (req: Request, res: Response) => {
       classNo = user.class;
       section = user.section;
     } else {
-      classNo = Number(req.query.classNo);
-      section = String(req.query.section || "A");
+      classNo = Number(req.params.classNo);
+      section = String(req.params.section || "A");
 
       if (!classNo) {
         throw new Error("Class number is required");

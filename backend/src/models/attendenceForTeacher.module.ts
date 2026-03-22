@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
-import CalendarOfEvents from "./calendarOfEvents.module.js";
+import CalendarOfEvents from "./calendarOfEvents.module";
 
 
 

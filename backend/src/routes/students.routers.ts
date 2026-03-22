@@ -7,7 +7,7 @@ export const studentRouter = Router();
 
 
 studentRouter.get(
-  "/",
+  "/:classNo/:section",
   authMiddleware,
   studentControllers.getStudentsByClass
 );

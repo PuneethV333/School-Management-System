@@ -26,7 +26,7 @@ export const getTimeTableByClass = async (req: Request, res: Response) => {
       const user = (await getUserData(reqUser)) as IStudent;
       classNo = user.class;
     } else {
-      const parsed = parseInt(req.query.classNo as string, 10);
+      const parsed = parseInt(req.params.classNo as string, 10);
 
       if (!parsed || isNaN(parsed)) {
         return res.status(400).json({ message: "Invalid classNo" });
@@ -73,7 +73,7 @@ export const getSyllabus = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "unauthorized" });
     }
 
-    const subjectRaw = req.query.subject as string;
+    const subjectRaw = req.params.subject as string;
 
     if (!subjectRaw) {
       return res.status(400).json({ message: "subject is required" });
