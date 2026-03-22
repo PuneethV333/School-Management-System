@@ -47,7 +47,6 @@ app.use(
 
 app.use(redisMiddleware);
 
-
 app.use("/auth", authRouter);
 app.use("/school", schoolRouter);
 app.use("/student", studentRouter);
