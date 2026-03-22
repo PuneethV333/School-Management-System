@@ -16,6 +16,7 @@ import { announcementsRoute } from "./routes/announcements.route";
 import { teacherRouter } from "./routes/teacher.router";
 import { academicRouter } from "./routes/academic.router";
 import { marksRouter } from "./routes/marks.router";
+import { attendanceRouter } from "./routes/attendance.router";
 
 dotenv.config();
 
@@ -53,6 +54,7 @@ app.use("/announcement", announcementsRoute);
 app.use("/teachers", teacherRouter);
 app.use("/academic", academicRouter);
 app.use("/marks", marksRouter);
+app.use("/attendance", attendanceRouter);
 
 app.get("/test", (_: Request, res: Response) => {
   res.send("Server is running");
