@@ -176,7 +176,7 @@ export const addNewStudent = async (req: Request, res: Response) => {
     const cacheKey = `class:${payload.student.class}:section:${payload.student.section}:year:${payload.student.academicYear}`;
     await redisClient.del(cacheKey);
 
-    return res.status(201).json(result);
+    return res.status(201).json({data:result});
   } catch (err) {
     return res.status(400).json(getError(err));
   }

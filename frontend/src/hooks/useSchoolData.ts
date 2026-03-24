@@ -1,15 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchSchoolInfo } from "../api/school.api";
+import type { userData } from "../types/userData.types";
 
-type userData = {
-    role?:'student'|'authority'|'teacher'
-    name?:string
-}
-
-export const useSchoolData = (userData:userData)  => useQuery({
-    queryKey:["school",userData],
-    queryFn:fetchSchoolInfo,
-    select:(res) => (res.data),
-    retry:false,
-    enabled:!!userData?.role
-})
+export const useSchoolData = (userData: userData) =>
+  useQuery({
+    queryKey: ["school", userData?.role],
+    queryFn: fetchSchoolInfo,
+    select: (res) => res.data,
+    retry: false,
+    enabled: !!userData?.role,
+  });

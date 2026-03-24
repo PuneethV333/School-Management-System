@@ -45,3 +45,4 @@ export interface addStudentInput {
   guardian: guardian;
   address: address;
 }
+

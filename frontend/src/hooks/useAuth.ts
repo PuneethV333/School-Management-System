@@ -53,8 +53,6 @@ export const useLogout = () => {
   });
 };
 
-
-
 export const useChangePassword = () => {
   return useMutation({
     mutationFn: ({ oldPass, newPass }: useChangePasswordProps) =>
