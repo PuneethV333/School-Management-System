@@ -25,7 +25,10 @@ const Navbar = () => {
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setDropdownOpen(false);
       }
     };
@@ -100,7 +103,9 @@ const Navbar = () => {
                 alt="profile"
                 className="h-10 w-10 rounded-full border border-white/20 object-cover"
               />
-              <span className="hidden sm:block font-medium">{userData.name}</span>
+              <span className="hidden sm:block font-medium">
+                {userData.name}
+              </span>
               <RiArrowDropDownLine
                 size={32}
                 className={`transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
@@ -118,20 +123,28 @@ const Navbar = () => {
                   <div>
                     <h1
                       className="font-semibold cursor-pointer"
-                      onClick={() => { navigate("/profile"); setDropdownOpen(false); }}
+                      onClick={() => {
+                        navigate("/profile");
+                        setDropdownOpen(false);
+                      }}
                     >
                       {userData.name}
                     </h1>
                     <p className="text-sm text-gray-300">{userData.authId}</p>
                     <p className="text-sm text-gray-400">{userData.role}</p>
                     {userData.role === "student" && (
-                      <p className="text-sm text-gray-400">Class: {userData.class}</p>
+                      <p className="text-sm text-gray-400">
+                        Class: {userData.class}
+                      </p>
                     )}
                   </div>
                 </div>
 
                 <button
-                  onClick={() => { setDropdownOpen(false); setShowChangePass(true); }}
+                  onClick={() => {
+                    setDropdownOpen(false);
+                    setShowChangePass(true);
+                  }}
                   className="w-full px-4 py-3 flex items-center gap-2 hover:bg-white/10 transition"
                 >
                   <RiLockPasswordLine /> Change Password
@@ -169,68 +182,74 @@ type ChangePasswordModalProps = {
   loading: boolean;
 };
 
-const ChangePasswordModal = React.forwardRef<HTMLDivElement, ChangePasswordModalProps>(
-  ({ onClose, onSubmit, loading }, ref) => {
-    const [oldPass, setOldPass] = useState("");
-    const [newPass, setNewPass] = useState("");
-    const [confirmPass, setConfirmPass] = useState("");
+const ChangePasswordModal = React.forwardRef<
+  HTMLDivElement,
+  ChangePasswordModalProps
+>(({ onClose, onSubmit, loading }, ref) => {
+  const [oldPass, setOldPass] = useState("");
+  const [newPass, setNewPass] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
 
-    const submit = () => {
-      if (!oldPass || !newPass || !confirmPass)
-        return toast.error("All fields are required");
-      if (newPass.length < 6)
-        return toast.error("Password must be at least 6 characters");
-      if (newPass !== confirmPass)
-        return toast.error("Passwords do not match");
+  const submit = () => {
+    if (!oldPass || !newPass || !confirmPass)
+      return toast.error("All fields are required");
+    if (newPass.length < 6)
+      return toast.error("Password must be at least 6 characters");
+    if (newPass !== confirmPass) return toast.error("Passwords do not match");
 
-      onSubmit(oldPass, newPass);
-    };
+    onSubmit(oldPass, newPass);
+  };
 
-    return (
-      <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center">
-        <div
-          ref={ref}
-          className="bg-[#0A0F1C] text-white w-full max-w-md rounded-xl shadow-xl p-6 border border-white/10"
-        >
-          <h2 className="text-xl font-semibold mb-5">Change Password</h2>
-          <input
-            type="password"
-            placeholder="Old password"
-            value={oldPass}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOldPass(e.target.value)}
-            className="w-full bg-[#020617] border border-white/10 rounded-md px-3 py-2 mb-3 outline-none focus:border-blue-500"
-          />
-          <input
-            type="password"
-            placeholder="New password"
-            value={newPass}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPass(e.target.value)}
-            className="w-full bg-[#020617] border border-white/10 rounded-md px-3 py-2 mb-3 outline-none focus:border-blue-500"
-          />
-          <input
-            type="password"
-            placeholder="Confirm new password"
-            value={confirmPass}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPass(e.target.value)}
-            className="w-full bg-[#020617] border border-white/10 rounded-md px-3 py-2 mb-5 outline-none focus:border-blue-500"
-          />
-          <div className="flex justify-end gap-3">
-            <button
-              onClick={onClose}
-              className="px-4 py-2 rounded-md hover:bg-white/10 transition"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={submit}
-              disabled={loading}
-              className="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700 transition disabled:opacity-60"
-            >
-              {loading ? "Updating..." : "Update"}
-            </button>
-          </div>
+  return (
+    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center">
+      <div
+        ref={ref}
+        className="bg-[#0A0F1C] text-white w-full max-w-md rounded-xl shadow-xl p-6 border border-white/10"
+      >
+        <h2 className="text-xl font-semibold mb-5">Change Password</h2>
+        <input
+          type="password"
+          placeholder="Old password"
+          value={oldPass}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setOldPass(e.target.value)
+          }
+          className="w-full bg-[#020617] border border-white/10 rounded-md px-3 py-2 mb-3 outline-none focus:border-blue-500"
+        />
+        <input
+          type="password"
+          placeholder="New password"
+          value={newPass}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setNewPass(e.target.value)
+          }
+          className="w-full bg-[#020617] border border-white/10 rounded-md px-3 py-2 mb-3 outline-none focus:border-blue-500"
+        />
+        <input
+          type="password"
+          placeholder="Confirm new password"
+          value={confirmPass}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setConfirmPass(e.target.value)
+          }
+          className="w-full bg-[#020617] border border-white/10 rounded-md px-3 py-2 mb-5 outline-none focus:border-blue-500"
+        />
+        <div className="flex justify-end gap-3">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-md hover:bg-white/10 transition"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={submit}
+            disabled={loading}
+            className="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700 transition disabled:opacity-60"
+          >
+            {loading ? "Updating..." : "Update"}
+          </button>
         </div>
       </div>
-    );
-  },
-);
+    </div>
+  );
+});
