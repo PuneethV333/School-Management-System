@@ -1,4 +1,4 @@
-import {api} from './apiInstance '
+import {api} from './apiInstance .api'
 
 export interface loginBody {
   authId: string;
