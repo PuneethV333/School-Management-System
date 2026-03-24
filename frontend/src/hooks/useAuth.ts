@@ -7,6 +7,7 @@ import {
 } from "../api/auth.api";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import type { useChangePasswordProps } from "../types/useAuth.types";
 
 export const useLogin = () => {
   const queryClient = useQueryClient();
@@ -52,10 +53,7 @@ export const useLogout = () => {
   });
 };
 
-type useChangePasswordProps = {
-  oldPass: string;
-  newPass: string;
-};
+
 
 export const useChangePassword = () => {
   return useMutation({

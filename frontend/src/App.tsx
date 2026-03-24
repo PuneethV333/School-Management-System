@@ -1,32 +1,36 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useFetchMe } from "./hooks/useAuth";
 import Spinner from "./components/Spinner";
 import Home from "./pages/Home";
-
-
+import { Toaster } from "react-hot-toast";
+import Dashboard from "./pages/subPages/Dashboard";
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
-  
-  
-  
+
   const { isPending, data: userData } = useFetchMe();
-  
-  if(userData){
+
+  if (userData) {
     console.log(userData);
   }
-  
-  if(isPending){
-    return <Spinner/>
+
+  if (isPending) {
+    return <Spinner />;
   }
 
   return (
     <>
+      <Toaster position="top-right" />
       <Suspense>
         <Routes>
-            <Route path="/" element={<Home/>}/>
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={userData ? <Navigate to="/" replace /> : <Login />}
+          />
+          <Route path="/" element={<Home />}>
+            <Route index element={<Dashboard/>}/>
+          </Route>
         </Routes>
       </Suspense>
     </>

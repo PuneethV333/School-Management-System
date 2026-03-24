@@ -18,7 +18,7 @@ studentRouter.post(
   studentControllers.addNewStudent
 );
 
-studentRouter.patch(
+studentRouter.post(
   "/profile-pic",
   authMiddleware,
   studentControllers.changeProfilePic

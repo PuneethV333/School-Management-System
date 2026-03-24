@@ -13,14 +13,7 @@ import {
 import useIsMobile from "../../hooks/useIsMobile";
 import useUi from "../../hooks/useUi";
 import { useFetchMe } from "../../hooks/useAuth";
-
-type MenuItem = {
-  name: string;
-  path: string;
-  icon: React.ElementType;
-};
-
-type MenuConfig = Record<string, Record<string, MenuItem[]>>;
+import type { MenuConfig, MenuItem } from "../../types/slideBar.types";
 
 const menuConfig: MenuConfig = {
   student: {

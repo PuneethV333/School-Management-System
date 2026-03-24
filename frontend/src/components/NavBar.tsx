@@ -7,6 +7,7 @@ import { useFetchMe, useLogout, useChangePassword } from "../hooks/useAuth";
 import Spinner from "../components/Spinner";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import type { ChangePasswordModalProps } from "../types/navBar.types";
 
 const Navbar = () => {
   const { menuIsOpen, setMenuIsOpen } = useUi();
@@ -176,11 +177,6 @@ const Navbar = () => {
 
 export default Navbar;
 
-type ChangePasswordModalProps = {
-  onClose: () => void;
-  onSubmit: (oldPass: string, newPass: string) => void;
-  loading: boolean;
-};
 
 const ChangePasswordModal = React.forwardRef<
   HTMLDivElement,
