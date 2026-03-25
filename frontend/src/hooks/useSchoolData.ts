@@ -10,3 +10,6 @@ export const useSchoolData = (userData: userData) =>
     retry: false,
     enabled: !!userData?.role,
   });
+
+  
+  
