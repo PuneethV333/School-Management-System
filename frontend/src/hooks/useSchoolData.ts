@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchSchoolInfo } from "../api/school.api";
 import type { userData } from "../types/userData.types";
 
-export const useSchoolData = (userData: userData) =>
+export const useFetchSchoolData = (userData: userData) =>
   useQuery({
     queryKey: ["school", userData?.role],
     queryFn: fetchSchoolInfo,

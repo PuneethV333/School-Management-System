@@ -7,9 +7,13 @@ const CountCard = ({ icon: Icon, title, count }: countCardInputProps) => {
         <div className="p-2 bg-cyan-500/10 rounded-lg">
           <Icon className="text-cyan-400 w-5 h-5" />
         </div>
-        <p className="text-slate-400 text-xs sm:text-sm font-medium leading-tight">{title}</p>
+        <p className="text-slate-400 text-xs sm:text-sm font-medium leading-tight">
+          {title}
+        </p>
       </div>
-      <span className="text-3xl sm:text-4xl font-black text-white tabular-nums">{count}</span>
+      <span className="text-3xl sm:text-4xl font-black text-white tabular-nums">
+        {count}
+      </span>
     </div>
   );
 };
