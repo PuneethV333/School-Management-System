@@ -8,6 +8,7 @@ import TeacherAttendance from "../models/attendenceForTeacher.module";
 import { getVal, setValKey } from "../utils/redis.utils";
 import ClassAttendance from "../models/attendence.module";
 import mongoose from "mongoose";
+import Class from "../models/class.module";
 
 export const getMyAttendance = async (req: Request, res: Response) => {
   try {
@@ -219,42 +220,34 @@ export const getClassAttendanceData = async (req: Request, res: Response) => {
     const reqUser = req.user as AuthToken;
 
     if (!reqUser) {
-      return res.status(401).json({
-        message: "Unauthorized",
-      });
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     if (!["teacher", "authority"].includes(reqUser.role)) {
-      return res.status(403).json({
-        message: "Access denied",
-      });
+      return res.status(403).json({ message: "Access denied" });
     }
 
-    const classIdParam = req.params.classId;
-
-    if (!classIdParam || Array.isArray(classIdParam)) {
-      return res.status(400).json({
-        message: "Invalid classId",
-      });
-    }
-
-    const classId = classIdParam;
-
-    if (!mongoose.Types.ObjectId.isValid(classId)) {
-      return res.status(400).json({
-        message: "Invalid classId",
-      });
+    const classNo = parseInt(req.params.classNo as string, 10);
+    if (isNaN(classNo)) {
+      return res.status(400).json({ message: "Invalid classNo" });
     }
 
     const academicYear = process.env.CURRENT_ACADEMIC_YEAR;
-
     if (!academicYear) {
-      return res.status(400).json({
-        message: "Academic year not found",
-      });
+      return res.status(400).json({ message: "Academic year not found" });
     }
 
-    const cacheKey = `classAttendance:${reqUser.authId}:${reqUser.role}:${classId}:${academicYear}`;
+    const classDoc = await Class.findOne({ classNo, academicYear })
+      .select("_id")
+      .lean();
+
+    if (!classDoc) {
+      return res.status(404).json({ message: "Class not found" });
+    }
+
+    const classId = classDoc._id;
+
+    const cacheKey = `classAttendance:${classId}:${academicYear}`;
 
     const cached = await getVal(cacheKey);
     if (cached) {
@@ -264,7 +257,7 @@ export const getClassAttendanceData = async (req: Request, res: Response) => {
       });
     }
 
-    const data = await ClassAttendance.find({
+    const data = await ClassAttendance.findOne({
       academicYear,
       class: classId,
     })
@@ -275,9 +268,9 @@ export const getClassAttendanceData = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       data,
-      count: data.length,
       source: "db",
     });
+
   } catch (err) {
     return res.status(400).json(getError(err));
   }

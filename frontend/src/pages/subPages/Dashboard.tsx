@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { GraduationCap, UsersRound, IdCard } from "lucide-react";
 import CountCard from "../../components/CountCard";
 import { useFetchMe } from "../../hooks/useAuth";
@@ -6,20 +7,33 @@ import Spinner from "../../components/Spinner";
 import ShowTodaysClassInDashboard from "../../components/ShowTodaysClassInDashboard";
 import type { showTodaysClassesProps } from "../../types/showTodaysClasses.types";
 import { useFetchTimeTable } from "../../hooks/useAcademicData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SelectClass from "../../context/SelectClass";
+import { useFetchClassAttendance } from "../../hooks/useAttendanceData";
+import { returnMonthsData } from "../../utils/returnMonthsData";
+import { resolveClassAttendance } from "../../utils/resolveClassAttendance";
 
 const Dashboard = () => {
   const { data: userData } = useFetchMe();
   const { data: schoolData, isPending: loading } = useFetchSchoolData(userData);
 
-  const [classNo, setClassNo] = useState<number>(1);
+  const [classNo, setClassNo] = useState<number>(2);
   const [isStudent, setIsStudent] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (userData?.role === "student") {
+      setIsStudent(true);
+      setClassNo(userData?.class);
+    }
+  }, [userData]);
 
   const { data: timetable, isPending: loadingTimetable } = useFetchTimeTable(
     userData,
     classNo,
   );
+
+  const { data: classAttendance, isPending: loadingClassAttendance } =
+    useFetchClassAttendance(userData, classNo);
 
   const dayIndex = new Date().getDay();
   const mappedIndex = dayIndex === 0 ? 0 : dayIndex - 1;
@@ -27,16 +41,14 @@ const Dashboard = () => {
   const todaysTimeTable: showTodaysClassesProps[] =
     timetable?.[mappedIndex]?.periods || [];
 
-  if (loading || loadingTimetable) return <Spinner />;
+  if (loading || loadingTimetable || loadingClassAttendance) return <Spinner />;
 
-  if (todaysTimeTable.length > 0) {
-    console.log(todaysTimeTable);
-  }
+  const thisMonthsClassAttendance = returnMonthsData(classAttendance.months);
+  const todaysClassAttendance = resolveClassAttendance(
+    thisMonthsClassAttendance?.weeks ?? [],
+  );
 
-  if (userData?.role === "student") {
-    setIsStudent(true);
-    setClassNo(userData?.class);
-  }
+  console.log(todaysClassAttendance);
 
   return (
     <div className="w-full min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-6 sm:py-8 lg:py-10 overflow-x-hidden flex">

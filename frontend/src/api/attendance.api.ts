@@ -5,8 +5,8 @@ export const fetchMyAttendance = async () => {
   return res.data;
 };
 
-export const fetchClassAttendance = async (classId: string) => {
-  const res = await api.get(`/attendance/${classId}`);
+export const fetchClassAttendance = async (classNo: number) => {
+  const res = await api.get(`/attendance/class/${classNo}`);
   return res.data;
 };
 

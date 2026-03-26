@@ -38,11 +38,11 @@ export const useFetchTeachersAttendance = (userData: userData) => {
 
 export const useFetchClassAttendance = (
   userData: userData,
-  classId: string,
+  classNo: number,
 ) => {
   return useQuery({
-    queryKey: ["attendance", "class", classId],
-    queryFn: () => fetchClassAttendance(classId),
+    queryKey: ["attendance", "class", classNo],
+    queryFn: () => fetchClassAttendance(classNo),
     retry: false,
     enabled: !!userData.authId,
     select: (res) => res.data,
