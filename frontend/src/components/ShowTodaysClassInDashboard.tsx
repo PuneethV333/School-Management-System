@@ -7,9 +7,10 @@ import {
 } from "lucide-react";
 import type { ShowTodaysClassesContainerProps } from "../types/showTodaysClasses.types";
 import type { LucideIcon } from "lucide-react";
+import { capitalizeFirstLetter } from "../utils/capitalize";
 
 const subjectStyles: Record<string,{ border: string; badge: string; text: string; icon: LucideIcon }> = {
-  Math: {
+  Maths: {
     border: "border-blue-800",
     badge: "bg-blue-900 text-blue-300",
     text: "text-blue-300",
@@ -52,11 +53,11 @@ const ShowTodaysClassInDashboard = ({
 }: ShowTodaysClassesContainerProps) => {
   return (
     <div>
-      <h1>Today's class</h1>
+      <h1 className="text-3xl font-bold underline">Today's class</h1>
       {classes.length > 0 && (
         <div className="flex flex-col justify-around">
           {classes.map((x, idx) => {
-            const s = subjectStyles[x.subject] ?? {
+            const s = subjectStyles[capitalizeFirstLetter(x.subject.toLocaleLowerCase())] ?? {
               border: "border-gray-200",
               badge: "bg-gray-100 text-gray-700",
               text: "text-gray-700",
