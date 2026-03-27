@@ -270,7 +270,6 @@ export const getClassAttendanceData = async (req: Request, res: Response) => {
       data,
       source: "db",
     });
-
   } catch (err) {
     return res.status(400).json(getError(err));
   }
