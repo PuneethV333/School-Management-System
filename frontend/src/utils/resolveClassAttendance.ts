@@ -4,6 +4,7 @@ export type Day = {
   isHoliday: boolean;
   isSunday: boolean;
   hasClass: boolean;
+  status:"PRESENT"|"ABSENT"|"HOLIDAY"|"LEAVE"|null
 };
 
 export interface ReturnType {

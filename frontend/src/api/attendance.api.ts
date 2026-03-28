@@ -19,3 +19,8 @@ export const fetchStudentsAttendance = async () => {
   const res = await api.get("/attendance/all/student");
   return res.data;
 };
+
+export const fetchStudentsAttendanceAccClass = async (classNo:number) => {
+  const res = await api.get(`/attendance/students/${classNo}`);
+  return res.data;
+};

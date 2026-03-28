@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./pages/subPages/Dashboard";
 import My from "./pages/subPages/ViewAttendance/My";
+import Students from "./pages/subPages/ViewAttendance/Students";
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/" element={<Home />}>
             <Route index element={<Dashboard/>}/>
             <Route path="my/attendance" element={<My/>}/>
+            <Route path="students/attendance" element={<Students/>}/>
           </Route>
         </Routes>
       </Suspense>

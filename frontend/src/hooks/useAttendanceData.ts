@@ -4,6 +4,7 @@ import {
   fetchClassAttendance,
   fetchMyAttendance,
   fetchStudentsAttendance,
+  fetchStudentsAttendanceAccClass,
 } from "../api/attendance.api";
 
 export const useFetchMyAttendance = (userData: userData) => {
@@ -48,3 +49,13 @@ export const useFetchClassAttendance = (
     select: (res) => res.data,
   });
 };
+
+export const useFetchStudentsAttendanceAccClass = (userData:userData,classNo:number) => {
+    return useQuery({
+        queryKey:["attendance","students",classNo],
+        queryFn:() => fetchStudentsAttendanceAccClass(classNo),
+        enabled:!!userData && userData.role !== "student",
+        retry:false,
+        select:(res) => res.data
+    })
+}
