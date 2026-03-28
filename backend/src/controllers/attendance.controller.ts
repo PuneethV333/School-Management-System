@@ -40,7 +40,7 @@ export const getMyAttendance = async (req: Request, res: Response) => {
     if (reqUser.role === "student") {
       const student = await Student.findOne({
         authId: reqUser.authId,
-      }).lean();
+      }).lean().populate("student");
 
       if (!student) {
         return res.status(404).json({ message: "Student not found" });
@@ -203,7 +203,9 @@ export const getStudentAttendanceDataAccClass = async (
     const data = await StudentAttendance.find({
       academicYear: academicYear,
       class: classNo,
-    }).lean();
+    })
+      .populate("student", "name authId")  
+      .lean();
 
     if (data.length === 0) {
       return res.status(400).json({
@@ -221,7 +223,6 @@ export const getStudentAttendanceDataAccClass = async (
     res.status(400).json(getError(err));
   }
 };
-
 export const getAllTeacherAttendanceData = async (
   req: Request,
   res: Response,
