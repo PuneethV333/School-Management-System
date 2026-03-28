@@ -73,7 +73,7 @@ const Home = () => {
         </aside>
         <main
           ref={mainRef}
-          className="flex-1 overflow-y-auto bg-[#050723] text-white transition-all duration-300"
+          className="flex-1 overflow-y-auto bg-[#050723] text-white transition-all duration-300 px-5"
         >
           <Outlet />
         </main>

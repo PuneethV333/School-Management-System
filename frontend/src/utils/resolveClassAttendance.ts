@@ -1,4 +1,4 @@
-type Day = {
+export type Day = {
   date: string;
   presentCount: number | null;
   isHoliday: boolean;
