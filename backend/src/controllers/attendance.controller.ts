@@ -162,6 +162,66 @@ export const getAllStudentAttendanceData = async (
   }
 };
 
+export const getStudentAttendanceDataAccClass = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const reqUser = req.user as AuthToken;
+    if (!reqUser || reqUser.role === "student") {
+      return res.status(403).json({
+        message: "unauthorized",
+      });
+    }
+
+    const academicYear = process.env.CURRENT_ACADEMIC_YEAR;
+
+    if (!academicYear) {
+      return res.status(400).json({
+        message: "Academic year not found",
+      });
+    }
+
+    const classNo = parseInt(req.params.classNo as string, 10);
+    if (isNaN(classNo)) {
+      return res.status(400).json({
+        message: "class number not provided",
+      });
+    }
+
+    const cacheKey = `Attendance-of-student-Of-Class:${classNo}:${academicYear}`;
+
+    const cached = await getVal(cacheKey);
+
+    if (cached) {
+      return res.status(200).json({
+        data: JSON.parse(cached),
+        source: "redis",
+      });
+    }
+
+    const data = await StudentAttendance.find({
+      academicYear: academicYear,
+      class: classNo,
+    }).lean();
+
+    if (data.length === 0) {
+      return res.status(400).json({
+        message: "data not found",
+      });
+    }
+
+    await setValKey(cacheKey, JSON.stringify(data), 300);
+
+    return res.status(200).json({
+      data: data,
+      source: "db",
+    });
+  } catch (err) {
+    res.status(400).json(getError(err));
+  }
+};
+
 export const getAllTeacherAttendanceData = async (
   req: Request,
   res: Response,

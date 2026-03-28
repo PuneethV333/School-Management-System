@@ -37,10 +37,8 @@ const daySchema = new Schema<IDay>(
       default: true,
     },
   },
-  { _id: false }
+  { _id: false },
 );
-
-
 
 export interface IWeek {
   weekNumber: number;
@@ -60,10 +58,8 @@ const weekSchema = new Schema<IWeek>(
       default: [],
     },
   },
-  { _id: false }
+  { _id: false },
 );
-
-
 
 export interface IMonth {
   monthNumber: number;
@@ -84,10 +80,8 @@ const monthSchema = new Schema<IMonth>(
       default: [],
     },
   },
-  { _id: false }
+  { _id: false },
 );
-
-
 
 export interface IStudentAttendance extends Document {
   student: mongoose.Types.ObjectId;
@@ -95,8 +89,6 @@ export interface IStudentAttendance extends Document {
   class: number;
   months: IMonth[];
 }
-
-
 
 export interface AttendanceInit {
   academicYear: string;
@@ -107,8 +99,6 @@ export interface AttendanceInit {
 interface StudentAttendanceModel extends Model<IStudentAttendance> {
   initializeAttendance(data: AttendanceInit): Promise<IMonth[]>;
 }
-
-
 
 const studentAttendanceSchema = new Schema<IStudentAttendance>(
   {
@@ -133,10 +123,8 @@ const studentAttendanceSchema = new Schema<IStudentAttendance>(
       default: [],
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
-
-
 
 studentAttendanceSchema.statics.initializeAttendance = async function ({
   academicYear,
@@ -146,9 +134,7 @@ studentAttendanceSchema.statics.initializeAttendance = async function ({
   const calendarDoc = await CalendarOfEvents.findOne({ academicYear });
 
   if (!calendarDoc) {
-    console.warn(
-      `Calendar for academic year ${academicYear} not found`
-    );
+    console.warn(`Calendar for academic year ${academicYear} not found`);
   }
 
   const classDays = [1, 2, 3, 4, 5, 6]; // Mon–Sat
@@ -207,17 +193,15 @@ studentAttendanceSchema.statics.initializeAttendance = async function ({
   }));
 };
 
-
-
 function normalizeDate(date: Date): Date {
   return new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
   );
 }
 
 function getISOWeek(date: Date): number {
   const d = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
   );
 
   const dayNum = d.getUTCDay() || 7;
@@ -229,11 +213,11 @@ function getISOWeek(date: Date): number {
   return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 }
 
+const StudentAttendance: Model<IStudentAttendance> =
+  mongoose.models.student ||
+  mongoose.model<IStudentAttendance, StudentAttendanceModel>(
+    "StudentAttendance",
+    studentAttendanceSchema,
+  );
 
-
-const StudentAttendance : Model<IStudentAttendance> = mongoose.models.student || mongoose.model<IStudentAttendance, StudentAttendanceModel>(
-  "StudentAttendance",
-  studentAttendanceSchema
-);
-
-export default StudentAttendance
+export default StudentAttendance;
