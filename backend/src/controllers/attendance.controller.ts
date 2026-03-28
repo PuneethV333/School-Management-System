@@ -7,7 +7,6 @@ import Teacher from "../models/teacher.module";
 import TeacherAttendance from "../models/attendenceForTeacher.module";
 import { getVal, setValKey } from "../utils/redis.utils";
 import ClassAttendance from "../models/attendence.module";
-import mongoose from "mongoose";
 import Class from "../models/class.module";
 
 export const getMyAttendance = async (req: Request, res: Response) => {
