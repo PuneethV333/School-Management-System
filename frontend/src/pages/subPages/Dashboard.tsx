@@ -14,7 +14,7 @@ import { resolveClassAttendance } from "../../utils/resolveClassAttendance";
 import SelectClass from "../../components/SelectClass";
 import SelectType from "../../components/SelectType";
 import { processWeeklyData } from "../../utils/processWeekLyData";
-import { sortAttendanceData } from "../../utils/sort";
+// import { sortAttendanceData } from "../../utils/sort";
 
 const Dashboard = () => {
   const { data: userData } = useFetchMe();
@@ -40,7 +40,7 @@ const Dashboard = () => {
   const { data: classAttendance, isPending: loadingClassAttendance } =
     useFetchClassAttendance(userData, classNoForGraph);
     
-    classAttendance?.months?.sort((a,b) => a.monthNumber - b.monthNumber)    
+    classAttendance?.months?.sort((a:returnType,b:returnType) => a.monthNumber - b.monthNumber)    
 
   const dayIndex = new Date().getDay();
   const mappedIndex = dayIndex === 0 ? 0 : dayIndex - 1;

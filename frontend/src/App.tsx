@@ -5,6 +5,7 @@ import Spinner from "./components/Spinner";
 import Home from "./pages/Home";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./pages/subPages/Dashboard";
+import My from "./pages/subPages/ViewAttendance/My";
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
@@ -30,6 +31,7 @@ const App = () => {
           />
           <Route path="/" element={<Home />}>
             <Route index element={<Dashboard/>}/>
+            <Route path="my/attendance" element={<My/>}/>
           </Route>
         </Routes>
       </Suspense>
