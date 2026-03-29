@@ -7,7 +7,7 @@ import { resolveStudentAttendance } from "../../../utils/resolveStudentAttendanc
 
 const Students = () => {
   const { data: userData, isPending: loading } = useFetchMe();
-  const [classNo, setClassNo] = useState<number>(3);
+  const [classNo, setClassNo] = useState<number>(1);
 
   const {
     data: classStudentsAttendance,
