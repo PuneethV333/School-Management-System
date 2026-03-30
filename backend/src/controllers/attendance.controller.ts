@@ -348,7 +348,7 @@ export interface markStudentAttendanceProps {
   classNo: number;
 }
 
-export const markStudentAttendance = async (req: Request, res: Response) => {
+export const markStudentAttendanceController = async (req: Request, res: Response) => {
   try {
     const reqUser = req.user as AuthToken;
     if (!reqUser || reqUser.role === "student") {
@@ -357,8 +357,7 @@ export const markStudentAttendance = async (req: Request, res: Response) => {
       });
     }
 
-    const props: markStudentAttendanceProps =
-      req.body.markStudentAttendanceProps;
+    const props: markStudentAttendanceProps = req.body.markStudentAttendanceProps;
 
     if (!props) {
       return res.status(400).json({
@@ -374,19 +373,19 @@ export const markStudentAttendance = async (req: Request, res: Response) => {
     }
 
     const cacheKey = `Attendance-of-student-Of-Class:${props.classNo}:${academicYear}`;
-
     await redisClient.del(cacheKey);
-    
+
     const result = await helperDataForMarkAttendance(props);
-    
-    if(!result){
-        return res.status(400).json({
-            message:"some-thing went wrong"
-        })
+
+    if (!result) {
+      return res.status(400).json({
+        message: "something went wrong",
+      });
     }
 
     return res.status(200).json({
       message: "attendance updated",
+      data: result,
     });
   } catch (err) {
     return res.status(400).json(getError(err));
