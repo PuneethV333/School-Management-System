@@ -9,6 +9,7 @@ import { getVal, setValKey } from "../utils/redis.utils";
 import ClassAttendance from "../models/attendence.module";
 import Class from "../models/class.module";
 import { redisClient } from "../config/redis";
+import { helperDataForMarkAttendance } from "../services/validatedMarkStudentAttendanceProp";
 
 export const getMyAttendance = async (req: Request, res: Response) => {
   try {
@@ -340,7 +341,6 @@ export const getClassAttendanceData = async (req: Request, res: Response) => {
 
 export interface studentAuthIdMarkObj {
   authId: string;
-  marks: number;
 }
 
 export interface markStudentAttendanceProps {
@@ -376,6 +376,14 @@ export const markStudentAttendance = async (req: Request, res: Response) => {
     const cacheKey = `Attendance-of-student-Of-Class:${props.classNo}:${academicYear}`;
 
     await redisClient.del(cacheKey);
+    
+    const result = await helperDataForMarkAttendance(props);
+    
+    if(!result){
+        return res.status(400).json({
+            message:"some-thing went wrong"
+        })
+    }
 
     return res.status(200).json({
       message: "attendance updated",
