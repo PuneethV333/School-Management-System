@@ -5,22 +5,16 @@ import authMiddleware from "../middleware/auth.middleware";
 
 export const studentRouter = Router();
 
+studentRouter.post(
+  "/profile-pic",
+  authMiddleware,
+  studentControllers.changeProfilePic,
+);
+
+studentRouter.post("/", authMiddleware, studentControllers.addNewStudent);
 
 studentRouter.get(
   "/:classNo/:section",
   authMiddleware,
-  studentControllers.getStudentsByClass
+  studentControllers.getStudentsByClass,
 );
-
-studentRouter.post(
-  "/",
-  authMiddleware,
-  studentControllers.addNewStudent
-);
-
-studentRouter.post(
-  "/profile-pic",
-  authMiddleware,
-  studentControllers.changeProfilePic
-);
-

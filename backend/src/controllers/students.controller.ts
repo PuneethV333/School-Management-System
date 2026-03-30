@@ -100,7 +100,6 @@ export const getStudentsByClass = async (req: Request, res: Response) => {
     const result = await studentServices.getStudentsByClassServices({
       class: classNo,
       section,
-      academicYear,
     });
 
     await setValKey(cacheKey, JSON.stringify(result), 300);

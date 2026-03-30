@@ -348,7 +348,7 @@ export interface markStudentAttendanceProps {
   classNo: number;
 }
 
-export const markStudentAttendanceController = async (req: Request, res: Response) => {
+export const markStudentAttendance = async (req: Request, res: Response) => {
   try {
     const reqUser = req.user as AuthToken;
     if (!reqUser || reqUser.role === "student") {

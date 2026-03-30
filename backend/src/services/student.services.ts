@@ -11,7 +11,6 @@ import Authority from "../models/authority.module";
 export interface getStudentsByClassInput {
   class: number;
   section:string
-  academicYear: string;
 }
 
 export const getStudentsByClassServices = async (
@@ -19,7 +18,6 @@ export const getStudentsByClassServices = async (
 ): Promise<IStudent[]> => {
   try {
     const students: IStudent[] = await Student.find({
-      academicYear: payload.academicYear,
       section:payload.section,
       class: payload.class,
     });

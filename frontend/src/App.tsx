@@ -8,6 +8,7 @@ import Dashboard from "./pages/subPages/Dashboard";
 import My from "./pages/subPages/ViewAttendance/My";
 import Students from "./pages/subPages/ViewAttendance/Students";
 import Teachers from "./pages/subPages/ViewAttendance/Teachers";
+import Student from "./pages/subPages/MarkAttendance/Student";
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
@@ -36,6 +37,7 @@ const App = () => {
             <Route path="my/attendance" element={<My/>}/>
             <Route path="students/attendance" element={<Students/>}/>
             <Route path="teachers/attendance" element={<Teachers/>}/>
+            <Route path="students/mark/attendance" element={<Student/>}/>
           </Route>
         </Routes>
       </Suspense>
