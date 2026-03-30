@@ -9,3 +9,4 @@ attendanceRouter.get('/all/teacher',authMiddleware,attendanceController.getAllTe
 attendanceRouter.get('/all/student',authMiddleware,attendanceController.getAllStudentAttendanceData)
 attendanceRouter.get('/class/:classNo',authMiddleware,attendanceController.getClassAttendanceData);
 attendanceRouter.get('/students/:classNo',authMiddleware,attendanceController.getStudentAttendanceDataAccClass);
+attendanceRouter.post('/students/mark',authMiddleware,attendanceController.markStudentAttendance);

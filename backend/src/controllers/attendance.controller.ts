@@ -8,6 +8,7 @@ import TeacherAttendance from "../models/attendenceForTeacher.module";
 import { getVal, setValKey } from "../utils/redis.utils";
 import ClassAttendance from "../models/attendence.module";
 import Class from "../models/class.module";
+import { redisClient } from "../config/redis";
 
 export const getMyAttendance = async (req: Request, res: Response) => {
   try {
@@ -40,7 +41,9 @@ export const getMyAttendance = async (req: Request, res: Response) => {
     if (reqUser.role === "student") {
       const student = await Student.findOne({
         authId: reqUser.authId,
-      }).lean().populate("student");
+      })
+        .lean()
+        .populate("student");
 
       if (!student) {
         return res.status(404).json({ message: "Student not found" });
@@ -204,7 +207,7 @@ export const getStudentAttendanceDataAccClass = async (
       academicYear: academicYear,
       class: classNo,
     })
-      .populate("student", "name authId")  
+      .populate("student", "name authId")
       .lean();
 
     if (data.length === 0) {
@@ -329,6 +332,53 @@ export const getClassAttendanceData = async (req: Request, res: Response) => {
     return res.status(200).json({
       data,
       source: "db",
+    });
+  } catch (err) {
+    return res.status(400).json(getError(err));
+  }
+};
+
+export interface studentAuthIdMarkObj {
+  authId: string;
+  marks: number;
+}
+
+export interface markStudentAttendanceProps {
+  selectedStudents: studentAuthIdMarkObj[];
+  classNo: number;
+}
+
+export const markStudentAttendance = async (req: Request, res: Response) => {
+  try {
+    const reqUser = req.user as AuthToken;
+    if (!reqUser || reqUser.role === "student") {
+      return res.status(403).json({
+        message: "unauthorized",
+      });
+    }
+
+    const props: markStudentAttendanceProps =
+      req.body.markStudentAttendanceProps;
+
+    if (!props) {
+      return res.status(400).json({
+        message: "data not provided",
+      });
+    }
+
+    const academicYear = process.env.CURRENT_ACADEMIC_YEAR;
+    if (!academicYear) {
+      return res.status(400).json({
+        message: "academicYear not found",
+      });
+    }
+
+    const cacheKey = `Attendance-of-student-Of-Class:${props.classNo}:${academicYear}`;
+
+    await redisClient.del(cacheKey);
+
+    return res.status(200).json({
+      message: "attendance updated",
     });
   } catch (err) {
     return res.status(400).json(getError(err));

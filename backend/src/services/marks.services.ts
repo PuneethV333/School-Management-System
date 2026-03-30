@@ -61,12 +61,11 @@ export const addUtServices = async (
     const studentMap: Record<string, any> = {};
     students.forEach((s) => (studentMap[s.authId] = s._id));
 
-    // ✅ Previous UT check
     if (utNo > 1) {
       const prevUT = `UT-${utNo - 1}`;
 
       const prevExists = await Marks.findOne({
-        class: classNo, // ✅ FIX
+        class: classNo,
         academicYear,
         "subjects.assessments.name": prevUT,
       });
@@ -76,9 +75,8 @@ export const addUtServices = async (
       }
     }
 
-    // ✅ Duplicate check
     const utExists = await Marks.findOne({
-      class: classNo, // ✅ FIX
+      class: classNo,
       academicYear,
       "subjects.subject": subjectName,
       "subjects.assessments.name": utName,
@@ -88,11 +86,10 @@ export const addUtServices = async (
       throw new Error(`${utName} already exists for ${subjectName}`);
     }
 
-    // ✅ Upsert base docs
     await Marks.bulkWrite(
       students.map((s) => ({
         updateOne: {
-          filter: { studentId: s._id, class: classNo, academicYear }, // ✅ FIX
+          filter: { studentId: s._id, class: classNo, academicYear },
           update: {
             $setOnInsert: {
               studentId: s._id,
@@ -120,7 +117,6 @@ export const addUtServices = async (
       )
         continue;
 
-      // ✅ Ensure subject exists
       bulkOps.push({
         updateOne: {
           filter: { studentId, class: classNo, academicYear },
@@ -132,7 +128,6 @@ export const addUtServices = async (
         },
       });
 
-      // ✅ Add assessment
       bulkOps.push({
         updateOne: {
           filter: {
@@ -192,7 +187,6 @@ export const addExamServices = async (
     const studentMap: Record<string, any> = {};
     students.forEach((s) => (studentMap[s.authId] = s._id));
 
-    // ✅ Upsert base docs
     await ExamTest.bulkWrite(
       students.map((s) => ({
         updateOne: {
@@ -224,7 +218,6 @@ export const addExamServices = async (
       )
         continue;
 
-      // ✅ Ensure subject exists
       bulkOps.push({
         updateOne: {
           filter: { studentId, classNo, academicYear },
@@ -236,7 +229,6 @@ export const addExamServices = async (
         },
       });
 
-      // ✅ Add exam assessment
       bulkOps.push({
         updateOne: {
           filter: {

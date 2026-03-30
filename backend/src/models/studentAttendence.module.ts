@@ -137,7 +137,7 @@ studentAttendanceSchema.statics.initializeAttendance = async function ({
     console.warn(`Calendar for academic year ${academicYear} not found`);
   }
 
-  const classDays = [1, 2, 3, 4, 5, 6]; // Mon–Sat
+  const classDays = [1, 2, 3, 4, 5, 6];
 
   const monthsMap = new Map<
     number,
@@ -213,8 +213,9 @@ function getISOWeek(date: Date): number {
   return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 }
 
-const StudentAttendance: Model<IStudentAttendance> =
-  mongoose.models.student ||
+// ✅ Fix: type as StudentAttendanceModel and use correct model name key
+const StudentAttendance: StudentAttendanceModel =
+  (mongoose.models.StudentAttendance as StudentAttendanceModel) ||
   mongoose.model<IStudentAttendance, StudentAttendanceModel>(
     "StudentAttendance",
     studentAttendanceSchema,
