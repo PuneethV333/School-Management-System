@@ -227,6 +227,7 @@ export const getStudentAttendanceDataAccClass = async (
     res.status(400).json(getError(err));
   }
 };
+
 export const getAllTeacherAttendanceData = async (
   req: Request,
   res: Response,
@@ -357,7 +358,8 @@ export const markStudentAttendance = async (req: Request, res: Response) => {
       });
     }
 
-    const props: markStudentAttendanceProps = req.body.markStudentAttendanceProps;
+    const props: markStudentAttendanceProps =
+      req.body.markStudentAttendanceProps;
 
     if (!props) {
       return res.status(400).json({
