@@ -11,8 +11,13 @@ export type SubjectResult = {
   assessments: Assessment[];
 };
 
+export type studentId = {
+    authId:string
+}
+
 export type UtResult = {
   class?: number;
   section?: string;
+  studentId:studentId;
   subjects?: SubjectResult[];
 };

@@ -5,6 +5,11 @@ export const fetchUtMarks = async (classNo:number) => {
     return res.data;
 }
 
+export const fetchUtMarksForStudents = async (classNo:number) => {
+    const res = await api.get(`/marks/student/ut/${classNo}`)
+    return res.data;
+}
+
 export const fetchExamMarks = async (classNo:number) => {
     const res = await api.get(`/marks/exam/${classNo}`)
     return res.data;
