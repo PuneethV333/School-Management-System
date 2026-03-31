@@ -9,11 +9,11 @@ import type { showTodaysClassesProps } from "../../types/showTodaysClasses.types
 import { useFetchTimeTable } from "../../hooks/useAcademicData";
 import { useState, useEffect } from "react";
 import { useFetchClassAttendance } from "../../hooks/useAttendanceData";
-import { returnMonthsData, type returnType } from "../../utils/returnMonthsData";
-import { resolveClassAttendance } from "../../utils/resolveClassAttendance";
+import { /*returnMonthsData,*/ type returnType } from "../../utils/returnMonthsData";
+// import { resolveClassAttendance } from "../../utils/resolveClassAttendance";
 import SelectClass from "../../components/SelectClass";
 import SelectType from "../../components/SelectType";
-import { processWeeklyData } from "../../utils/processWeekLyData";
+// import { processWeeklyData } from "../../utils/processWeekLyData";
 // import { sortAttendanceData } from "../../utils/sort";
 
 const Dashboard = () => {
@@ -53,14 +53,14 @@ const Dashboard = () => {
   console.log(classAttendance);
   
 
-  const thisMonthsClassAttendance = returnMonthsData(classAttendance.months);
-  const todaysClassAttendance = resolveClassAttendance(
-    thisMonthsClassAttendance?.weeks ?? [],
-  );
+//   const thisMonthsClassAttendance = returnMonthsData(classAttendance.months);
+//   const todaysClassAttendance = resolveClassAttendance(
+//     thisMonthsClassAttendance?.weeks ?? [],
+//   );
   
-  const res = processWeeklyData(thisMonthsClassAttendance,new Date(),classAttendance.totalStudents)
+//   const res = processWeeklyData(thisMonthsClassAttendance,new Date(),classAttendance.totalStudents)
   
-console.log(res)  
+// console.log(res)  
   
 
 

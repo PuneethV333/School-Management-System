@@ -70,7 +70,7 @@ export const getUTMarks = async (req: Request, res: Response) => {
     if (reqUser.role === "student") {
       const student = await Student.findOne({
         authId: reqUser.authId,
-        classNo,
+        class:classNo,
       }).lean();
 
       if (!student) {
@@ -79,12 +79,12 @@ export const getUTMarks = async (req: Request, res: Response) => {
 
       data = await Marks.find({
         studentId: student._id,
-        classNo,
+        class:classNo,
         academicYear,
       }).lean();
     } else if (reqUser.role === "teacher" || reqUser.role === "authority") {
       data = await Marks.find({
-        classNo,
+        class:classNo,
         academicYear,
       }).lean();
     } else {

@@ -7,55 +7,58 @@ import {
   fetchStudentsAttendanceAccClass,
 } from "../api/attendance.api";
 
-export const useFetchMyAttendance = (userData: userData) => {
+export const useFetchMyAttendance = (userData?: userData) => {
   return useQuery({
     queryKey: ["attendance", "my", userData?.authId],
-    queryFn: fetchMyAttendance,
+    queryFn: () => fetchMyAttendance(),
+    enabled: !!userData?.authId,
     retry: false,
     select: (res) => res.data,
-    enabled: !!userData?.authId,
   });
 };
 
-export const useFetchStudentsAttendance = (userData: userData) => {
+export const useFetchStudentsAttendance = (userData?: userData) => {
   return useQuery({
     queryKey: ["attendance", "students", userData?.authId],
-    queryFn: fetchStudentsAttendance,
-    select: (res) => res.data,
-    enabled: !!userData && userData.role !== "student",
+    queryFn: () => fetchStudentsAttendance(),
+    enabled: !!userData?.authId && userData.role !== "student",
     retry: false,
+    select: (res) => res.data,
   });
 };
 
-export const useFetchTeachersAttendance = (userData: userData) => {
+export const useFetchTeachersAttendance = (userData?: userData) => {
   return useQuery({
     queryKey: ["attendance", "teacher", userData?.authId],
-    queryFn: fetchStudentsAttendance,
-    select: (res) => res.data,
-    enabled: !!userData && userData.role === "authority",
+    queryFn: () => fetchStudentsAttendance(),
+    enabled: !!userData?.authId && userData.role === "authority",
     retry: false,
+    select: (res) => res.data,
   });
 };
 
 export const useFetchClassAttendance = (
-  userData: userData,
-  classNo: number,
+  userData?: userData,
+  classNo?: number,
 ) => {
   return useQuery({
     queryKey: ["attendance", "class", classNo],
-    queryFn: () => fetchClassAttendance(classNo),
+    queryFn: () => fetchClassAttendance(classNo!),
+    enabled: !!userData?.authId && !!classNo,
     retry: false,
-    enabled: !!userData.authId,
     select: (res) => res.data,
   });
 };
 
-export const useFetchStudentsAttendanceAccClass = (userData:userData,classNo:number) => {
-    return useQuery({
-        queryKey:["attendance","students",classNo],
-        queryFn:() => fetchStudentsAttendanceAccClass(classNo),
-        enabled:!!userData && userData.role !== "student",
-        retry:false,
-        select:(res) => res.data
-    })
-}
+export const useFetchStudentsAttendanceAccClass = (
+  userData?: userData,
+  classNo?: number,
+) => {
+  return useQuery({
+    queryKey: ["attendance", "students", classNo],
+    queryFn: () => fetchStudentsAttendanceAccClass(classNo!),
+    enabled: !!userData?.authId && userData.role !== "student" && !!classNo,
+    retry: false,
+    select: (res) => res.data,
+  });
+};
