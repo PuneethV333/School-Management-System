@@ -55,15 +55,18 @@ export const getUTMarks = async (req: Request, res: Response) => {
     const cacheKey =
       reqUser.role === "student"
         ? `UT:${classNo}:${academicYear}:${reqUser.authId}`
-        : `UT:${classNo}:${academicYear}:${reqUser.role}`;
+        : `UT:${classNo}:${academicYear}`;
 
-    // const cached = await getVal(cacheKey);
-    // if (cached) {
-    //   return res.status(200).json({
-    //     data: JSON.parse(cached),
-    //     source: "redis",
-    //   });
-    // }
+    const cached = await getVal(cacheKey);
+
+    if (cached) {
+      try {
+        return res.status(200).json({
+          data: JSON.parse(cached),
+          source: "redis",
+        });
+      } catch {}
+    }
 
     let data;
 
@@ -71,7 +74,9 @@ export const getUTMarks = async (req: Request, res: Response) => {
       const student = await Student.findOne({
         authId: reqUser.authId,
         class: classNo,
-      }).lean();
+      })
+        .select("_id")
+        .lean();
 
       if (!student) {
         return res.status(404).json({ message: "Student not found" });
@@ -82,14 +87,14 @@ export const getUTMarks = async (req: Request, res: Response) => {
         class: classNo,
         academicYear,
       })
-        .populate("studentId name")
+        .populate("studentId", "name")
         .lean();
-    } else if (reqUser.role === "teacher" || reqUser.role === "authority") {
+    } else if (["teacher", "authority"].includes(reqUser.role)) {
       data = await Marks.find({
         class: classNo,
         academicYear,
       })
-        .populate("studentId name")
+        .populate("studentId", "name")
         .lean();
     } else {
       return res.status(403).json({ message: "Forbidden" });
@@ -107,12 +112,10 @@ export const getUtMarksForStudent = async (req: Request, res: Response) => {
   try {
     const reqUser = req.user as AuthToken;
 
-    // ✅ AUTH
     if (!reqUser || reqUser.role !== "student") {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    // ✅ FIND STUDENT
     const student = await Student.findOne({
       authId: reqUser.authId,
     }).lean();
@@ -121,45 +124,39 @@ export const getUtMarksForStudent = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Student not found" });
     }
 
-    // ✅ CLASS VALIDATION
     const classNo = parseInt(req.params.classNo as string, 10);
     if (isNaN(classNo)) {
       return res.status(400).json({ message: "Invalid class number" });
     }
 
-    // ✅ ACADEMIC YEAR
     const academicYear = process.env.CURRENT_ACADEMIC_YEAR;
     if (!academicYear) {
       return res.status(500).json({ message: "Academic year not set" });
     }
 
-    // 🔍 DEBUG LOGS (IMPORTANT)
     console.log("DEBUG:", {
       studentId: student._id,
       classNo,
       academicYear,
     });
 
-    // ✅ QUERY
     const data = await Marks.findOne({
       studentId: student._id,
       class: classNo,
       academicYear,
     })
-      .select("subjects studentId") // ✅ only needed fields
+      .select("subjects studentId")
       .populate({
         path: "studentId",
         select: "name rollNo authId",
       })
       .lean();
 
-    // 🔍 DEBUG
     console.log("RESULT:", data);
 
     return res.status(200).json({
       data,
     });
-
   } catch (err) {
     console.error(err);
     return res.status(500).json(getError(err));
