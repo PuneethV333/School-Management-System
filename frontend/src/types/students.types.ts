@@ -46,3 +46,15 @@ export interface addStudentInput {
   address: address;
 }
 
+export interface Assessment {
+  type: string;
+  name: string;
+  marksObtained: number;
+  maxMarks: number;
+  examDate?: string;
+}
+
+export interface Subject {
+  subject: string;
+  assessments: Assessment[];
+}

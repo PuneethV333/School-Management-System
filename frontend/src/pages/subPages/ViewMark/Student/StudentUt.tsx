@@ -8,39 +8,24 @@ import {
   getPercentage,
   getScoreColor,
 } from "../../../../utils/viewUtHelpers";
+import type { Subject,Assessment } from "../../../../types/students.types";
 
-interface Assessment {
-  _id: string;
-  name: string;
-  marksObtained: number;
-  maxMarks: number;
-  examDate?: string;
-}
-
-interface Subject {
-  subject: string;
-  assessments: Assessment[];
-}
 
 const StudentUt = () => {
   const { data: userData, isLoading: isLoadingUser } = useFetchMe();
 
-  // ✅ SAFE CLASS EXTRACTION
   const classNo =
     typeof userData?.class === "number"
       ? userData.class
       : Number(userData?.class);
 
-  // ✅ HOOK (SAFE)
   const { data: studentData, isLoading: isLoadingUtData } =
     useFetchUtMarksForStudent(classNo, userData);
 
-  // ✅ LOADING
   if (isLoadingUser || isLoadingUtData) {
     return <Spinner />;
   }
 
-  // ✅ GUARD (IMPORTANT)
   if (!userData || !classNo) {
     return <div className="text-center text-red-400">Invalid user data</div>;
   }
