@@ -10,6 +10,7 @@ import Students from "./pages/subPages/ViewAttendance/Students";
 import Teachers from "./pages/subPages/ViewAttendance/Teachers";
 import Student from "./pages/subPages/MarkAttendance/Student";
 import Ut from "./pages/subPages/ViewMark/Ut";
+import Exam from "./pages/subPages/ViewMark/Exam";
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
@@ -40,6 +41,7 @@ const App = () => {
             <Route path="teachers/attendance" element={<Teachers/>}/>
             <Route path="students/mark/attendance" element={<Student/>}/>
             <Route path="marks/ut" element={<Ut/>}/>
+            <Route path="marks/exam" element={<Exam/>}/>
           </Route>
         </Routes>
       </Suspense>

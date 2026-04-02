@@ -211,12 +211,12 @@ export const getExamMarks = async (req: Request, res: Response) => {
         classNo,
         academicYear,
         publishedAt: { $ne: null },
-      }).lean();
+      }).populate("studentId").lean();
     } else if (reqUser.role === "teacher" || reqUser.role === "authority") {
       data = await ExamTest.find({
         classNo,
         academicYear,
-      }).lean();
+      }).populate("studentId").lean();
     } else {
       return res.status(403).json({ message: "Forbidden" });
     }

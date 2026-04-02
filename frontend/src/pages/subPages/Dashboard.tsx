@@ -13,6 +13,7 @@ import { /*returnMonthsData,*/ type returnType } from "../../utils/returnMonthsD
 // import { resolveClassAttendance } from "../../utils/resolveClassAttendance";
 import SelectClass from "../../components/SelectClass";
 import SelectType from "../../components/SelectType";
+// import { useFetchExamMarks } from "../../hooks/useMarkData";
 // import { processWeeklyData } from "../../utils/processWeekLyData";
 // import { sortAttendanceData } from "../../utils/sort";
 
@@ -20,10 +21,17 @@ const Dashboard = () => {
   const { data: userData } = useFetchMe();
   const { data: schoolData, isPending: loading } = useFetchSchoolData(userData);
 
-  const [classNo, setClassNo] = useState<number>(2);
-  const [classNoForGraph, setClassNoForGraph] = useState<number>(2);
+  const [classNo, setClassNo] = useState<number>(1);
+  const [classNoForGraph, setClassNoForGraph] = useState<number>(1);
   const [isStudent, setIsStudent] = useState<boolean>(false);
   const [dataType, setDataType] = useState<"weekly" | "monthly">("weekly");
+  
+  
+//   const { data: studentData, isLoading: isLoadingUtData } =
+//     useFetchExamMarks(classNo, userData);
+    
+    console.log(studentData);
+    
 
   useEffect(() => {
     if (userData?.role === "student") {
@@ -71,6 +79,8 @@ const Dashboard = () => {
   // }
 
 //   console.log(todaysClassAttendance?.days[0].presentCount === null ? 0 : 100);
+
+
 
   return (
     <div className="w-full min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-6 sm:py-8 lg:py-10 overflow-x-hidden flex">

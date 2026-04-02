@@ -51,6 +51,7 @@ export interface Assessment {
   name: string;
   marksObtained: number;
   maxMarks: number;
+  _id:string,
   examDate?: string;
 }
 
