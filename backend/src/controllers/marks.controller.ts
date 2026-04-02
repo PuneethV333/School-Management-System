@@ -199,7 +199,7 @@ export const getExamMarks = async (req: Request, res: Response) => {
     if (reqUser.role === "student") {
       const student = await Student.findOne({
         authId: reqUser.authId,
-        classNo,
+        class:classNo,
       }).lean();
 
       if (!student) {

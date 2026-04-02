@@ -27,10 +27,7 @@ const Dashboard = () => {
   const [dataType, setDataType] = useState<"weekly" | "monthly">("weekly");
   
   
-//   const { data: studentData, isLoading: isLoadingUtData } =
-//     useFetchExamMarks(classNo, userData);
     
-    console.log(studentData);
     
 
   useEffect(() => {
