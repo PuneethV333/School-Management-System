@@ -18,6 +18,7 @@ export const useFetchStudentsByClass = (
     enabled: !!userData?.authId && !!classNo,
     retry: false,
     staleTime: 1000 * 60 * 5,
+    select:(res) => res.data
   });
 
 export const useCreateNewStudent = () => {

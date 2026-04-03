@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export const useMarkStudentsAttendance = () => {
   return useMutation({
-    mutationFn: markStudentAttendance,
+    mutationFn:markStudentAttendance,
     onSuccess: () => {
       toast.success("attendance marked");
     },

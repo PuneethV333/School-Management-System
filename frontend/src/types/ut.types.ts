@@ -34,3 +34,13 @@ export interface addUTPayload {
   maxMarks: number;
   utNo: number;
 }
+
+
+export type AddUtMarksResponse = {
+  success: boolean;
+  message: string;
+};
+
+export type AddUtMarksError = Error; // or AxiosError if you're using axios
+
+

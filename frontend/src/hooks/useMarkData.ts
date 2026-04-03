@@ -40,10 +40,10 @@ export const useAddUtMarks = () => {
   return useMutation({
     mutationFn: addUtMarks,
     onSuccess: () => {
-      toast.success("attendance marked");
+      toast.success("ut-Marks added");
     },
     onError: () => {
-      toast.error("failed to mark attendance");
+      toast.error("failed to add ut marks");
     },
   });
 };

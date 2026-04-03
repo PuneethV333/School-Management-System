@@ -12,6 +12,7 @@ import Student from "./pages/subPages/MarkAttendance/Student";
 import Ut from "./pages/subPages/ViewMark/Ut";
 import Exam from "./pages/subPages/ViewMark/Exam";
 import { AnnouncementsDetails } from "./pages/subPages/Announcement/Details";
+import { Ut as AddUtMarks}  from "./pages/subPages/AddMarks/Ut";
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
@@ -43,6 +44,7 @@ const App = () => {
             <Route path="students/mark/attendance" element={<Student />} />
             <Route path="marks/ut" element={<Ut />} />
             <Route path="marks/exam" element={<Exam />} />
+            <Route path="add/ut" element={< AddUtMarks/>} />
             <Route
               path="announcements/:id"
               element={<AnnouncementsDetails />}

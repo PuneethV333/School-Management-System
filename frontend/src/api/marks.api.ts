@@ -1,22 +1,22 @@
 import type { addUTPayload } from "../types/ut.types";
 import { api } from "./apiInstance.api"
 
-export const fetchUtMarks = async (classNo:number) => {
+export const fetchUtMarks = async (classNo: number) => {
     const res = await api.get(`/marks/ut/${classNo}`)
     return res.data;
 }
 
-export const fetchUtMarksForStudents = async (classNo:number) => {
+export const fetchUtMarksForStudents = async (classNo: number) => {
     const res = await api.get(`/marks/student/ut/${classNo}`)
     return res.data;
 }
 
-export const fetchExamMarks = async (classNo:number) => {
+export const fetchExamMarks = async (classNo: number) => {
     const res = await api.get(`/marks/exam/${classNo}`)
     return res.data;
 }
 
-type AddUtMarksParams = {
+export type AddUtMarksParams = {
   props: addUTPayload;
   classNo: number;
 };
