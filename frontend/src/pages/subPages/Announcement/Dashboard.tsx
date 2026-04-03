@@ -1,26 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link } from "react-router-dom"
-import Spinner from "../../../components/Spinner"
-import { useFetchAnnouncementData } from "../../../hooks/useAnnouncementData"
-import { useFetchMe } from "../../../hooks/useAuth"
-import { Calendar, Tag, ChevronRight } from "lucide-react"
-import { formatDate, getCategoryColor, getCategoryIcon, truncateText } from "../../../utils/announcementHelpers"
-import { Swiper, SwiperSlide } from "swiper/react"
-import { Autoplay, Pagination, Navigation } from "swiper/modules"
-import "swiper/css"
-import "swiper/css/pagination"
-import "swiper/css/navigation"
-
-
-
-
+import { Link } from "react-router-dom";
+import Spinner from "../../../components/Spinner";
+import { useFetchAnnouncementData } from "../../../hooks/useAnnouncementData";
+import { useFetchMe } from "../../../hooks/useAuth";
+import { Calendar, Tag, ChevronRight } from "lucide-react";
+import {
+  formatDate,
+  getCategoryColor,
+  getCategoryIcon,
+  truncateText,
+} from "../../../utils/announcementHelpers";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 export const Dashboard = () => {
-  const { data: userData, isPending: loading } = useFetchMe()
-  const { data: announcements, isPending: loadingAnnouncementData } = useFetchAnnouncementData(userData)
+  const { data: userData, isPending: loading } = useFetchMe();
+  const { data: announcements, isPending: loadingAnnouncementData } =
+    useFetchAnnouncementData(userData);
 
   if (loading || loadingAnnouncementData) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   if (!announcements || announcements.length === 0) {
@@ -28,7 +30,7 @@ export const Dashboard = () => {
       <div className="flex items-center justify-center h-64 text-slate-400">
         <p>No announcements available</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -67,19 +69,19 @@ export const Dashboard = () => {
           }}
           className="pb-10"
         >
-          {announcements.map((item:any) => {
+          {announcements.map((item: any) => {
             const isExpired =
-              item.expireAt && new Date(item.expireAt) < new Date()
+              item.expireAt && new Date(item.expireAt) < new Date();
 
             return (
               <SwiperSlide key={item._id}>
                 <Link to={`/announcements/${item._id}`}>
-                  <div className="group relative bg-gradient-to-br from-slate-800/60 via-slate-900/60 to-slate-950/50 backdrop-blur-sm border border-slate-700/30 rounded-xl overflow-hidden shadow-md hover:shadow-lg hover:border-slate-600/50 transition-all duration-300 h-full">
+                  <div className="group relative bg-linear-to-br from-slate-800/60 via-slate-900/60 to-slate-950/50 backdrop-blur-sm border border-slate-700/30 rounded-xl overflow-hidden shadow-md hover:shadow-lg hover:border-slate-600/50 transition-all duration-300 h-full">
                     <div
-                      className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${getCategoryColor(item.category)} pointer-events-none`}
+                      className={`absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r ${getCategoryColor(item.category)} pointer-events-none`}
                     ></div>
 
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-blue-500/0 group-hover:from-cyan-500/5 group-hover:to-blue-500/5 transition-all duration-500 pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-linear-to-br from-cyan-500/0 to-blue-500/0 group-hover:from-cyan-500/5 group-hover:to-blue-500/5 transition-all duration-500 pointer-events-none"></div>
 
                     <div className="relative p-4">
                       <div className="flex items-start justify-between gap-2 mb-3">
@@ -88,7 +90,7 @@ export const Dashboard = () => {
                             {getCategoryIcon(item.category)}
                           </span>
                           <div
-                            className={`px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gradient-to-r ${getCategoryColor(item.category)} text-white shadow-sm shrink-0`}
+                            className={`px-2.5 py-0.5 rounded-full text-xs font-semibold bg-linear-to-r ${getCategoryColor(item.category)} text-white shadow-sm shrink-0`}
                           >
                             {item.category}
                           </div>
@@ -152,11 +154,11 @@ export const Dashboard = () => {
                       </div>
                     </div>
 
-                    <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-cyan-500/10 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    <div className="absolute bottom-0 right-0 w-16 h-16 bg-linear-to-tl from-cyan-500/10 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                   </div>
                 </Link>
               </SwiperSlide>
-            )
+            );
           })}
         </Swiper>
       </div>
@@ -229,5 +231,5 @@ export const Dashboard = () => {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};

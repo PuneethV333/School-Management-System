@@ -12,7 +12,10 @@ import {
 import { useFetchMe } from "../../../hooks/useAuth";
 import { useFetchAnnouncementData } from "../../../hooks/useAnnouncementData";
 import Spinner from "../../../components/Spinner";
-import { formatDate, getCategoryColor } from "../../../utils/announcementHelpers";
+import {
+  formatDate,
+  getCategoryColor,
+} from "../../../utils/announcementHelpers";
 
 export const AnnouncementsDetails = () => {
   const { id } = useParams();
@@ -20,15 +23,14 @@ export const AnnouncementsDetails = () => {
   const { data: userData, isPending: loading } = useFetchMe();
   const { data: announcements, isPending: loadingAnnouncement } =
     useFetchAnnouncementData(userData);
-    
-    
-    if(loadingAnnouncement || loading){
-        return <Spinner/>
-    }
+
+  if (loadingAnnouncement || loading) {
+    return <Spinner />;
+  }
 
   const data = announcements?.find((x: any) => x._id === id) || null;
 
-  if (!data ) {
+  if (!data) {
     return (
       <div className="w-full min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <div className="text-center">
@@ -139,7 +141,7 @@ export const AnnouncementsDetails = () => {
                   Target Classes
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {data.classes.map((cls:number, index:number) => (
+                  {data.classes.map((cls: number, index: number) => (
                     <span
                       key={index}
                       className="px-4 py-2 bg-linear-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/50 rounded-lg text-cyan-300 font-medium"
@@ -170,7 +172,7 @@ export const AnnouncementsDetails = () => {
                   Attachments
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {data.attachments.map((attachment:any, index:number) => (
+                  {data.attachments.map((attachment: any, index: number) => (
                     <a
                       key={index}
                       href={attachment.fileUrl}
