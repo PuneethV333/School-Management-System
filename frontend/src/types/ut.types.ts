@@ -21,3 +21,16 @@ export type UtResult = {
   studentId:studentId;
   subjects?: SubjectResult[];
 };
+
+export interface incomingDataPayload {
+  authId: string;
+  marksObtained: number;
+}
+
+export interface addUTPayload {
+  data: incomingDataPayload[];
+  examDate: Date;
+  subjectName: "Math" | "Science" | "Social" | "Hindi" | "Kannada" | "English";
+  maxMarks: number;
+  utNo: number;
+}

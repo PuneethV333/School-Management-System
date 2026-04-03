@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type { userData } from "../types/userData.types";
-import { fetchExamMarks, fetchUtMarks, fetchUtMarksForStudents } from "../api/marks.api";
+import { addUtMarks, fetchExamMarks, fetchUtMarks, fetchUtMarksForStudents } from "../api/marks.api";
+import toast from "react-hot-toast";
 
 export const useFetchUtMarks = (classNo:number,userData:userData) => {
     return useQuery({
@@ -34,3 +35,15 @@ export const useFetchExamMarks = (classNo:number,userData:userData) => {
         staleTime:1000 * 60 * 5
     })
 }
+
+export const useAddUtMarks = () => {
+  return useMutation({
+    mutationFn: addUtMarks,
+    onSuccess: () => {
+      toast.success("attendance marked");
+    },
+    onError: () => {
+      toast.error("failed to mark attendance");
+    },
+  });
+};
