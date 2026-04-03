@@ -11,6 +11,7 @@ import Teachers from "./pages/subPages/ViewAttendance/Teachers";
 import Student from "./pages/subPages/MarkAttendance/Student";
 import Ut from "./pages/subPages/ViewMark/Ut";
 import Exam from "./pages/subPages/ViewMark/Exam";
+import { AnnouncementsDetails } from "./pages/subPages/Announcement/Details";
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
@@ -35,13 +36,17 @@ const App = () => {
             element={userData ? <Navigate to="/" replace /> : <Login />}
           />
           <Route path="/" element={<Home />}>
-            <Route index element={<Dashboard/>}/>
-            <Route path="my/attendance" element={<My/>}/>
-            <Route path="students/attendance" element={<Students/>}/>
-            <Route path="teachers/attendance" element={<Teachers/>}/>
-            <Route path="students/mark/attendance" element={<Student/>}/>
-            <Route path="marks/ut" element={<Ut/>}/>
-            <Route path="marks/exam" element={<Exam/>}/>
+            <Route index element={<Dashboard />} />
+            <Route path="my/attendance" element={<My />} />
+            <Route path="students/attendance" element={<Students />} />
+            <Route path="teachers/attendance" element={<Teachers />} />
+            <Route path="students/mark/attendance" element={<Student />} />
+            <Route path="marks/ut" element={<Ut />} />
+            <Route path="marks/exam" element={<Exam />} />
+            <Route
+              path="announcements/:id"
+              element={<AnnouncementsDetails />}
+            />
           </Route>
         </Routes>
       </Suspense>

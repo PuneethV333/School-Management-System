@@ -44,7 +44,7 @@ export const getMyAttendance = async (req: Request, res: Response) => {
         authId: reqUser.authId,
       })
         .lean()
-        .populate("student");
+        
 
       if (!student) {
         return res.status(404).json({ message: "Student not found" });
@@ -53,7 +53,7 @@ export const getMyAttendance = async (req: Request, res: Response) => {
       attendanceData = await StudentAttendance.findOne({
         student: student._id,
         academicYear,
-      }).lean();
+      }).lean().populate("student");
     }
 
     if (reqUser.role === "teacher") {
@@ -68,7 +68,7 @@ export const getMyAttendance = async (req: Request, res: Response) => {
       attendanceData = await TeacherAttendance.findOne({
         teacher: teacher._id,
         academicYear,
-      }).lean();
+      }).lean().populate("student");
     }
 
     if (!attendanceData) {

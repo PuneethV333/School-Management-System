@@ -9,10 +9,13 @@ import type { showTodaysClassesProps } from "../../types/showTodaysClasses.types
 import { useFetchTimeTable } from "../../hooks/useAcademicData";
 import { useState, useEffect } from "react";
 import { useFetchClassAttendance } from "../../hooks/useAttendanceData";
-import { /*returnMonthsData,*/ type returnType } from "../../utils/returnMonthsData";
+import {
+  /*returnMonthsData,*/ type returnType,
+} from "../../utils/returnMonthsData";
 // import { resolveClassAttendance } from "../../utils/resolveClassAttendance";
 import SelectClass from "../../components/SelectClass";
 import SelectType from "../../components/SelectType";
+import { Dashboard as AnnouncementForDashboard } from "./Announcement/Dashboard";
 // import { useFetchExamMarks } from "../../hooks/useMarkData";
 // import { processWeeklyData } from "../../utils/processWeekLyData";
 // import { sortAttendanceData } from "../../utils/sort";
@@ -25,10 +28,6 @@ const Dashboard = () => {
   const [classNoForGraph, setClassNoForGraph] = useState<number>(1);
   const [isStudent, setIsStudent] = useState<boolean>(false);
   const [dataType, setDataType] = useState<"weekly" | "monthly">("weekly");
-  
-  
-    
-    
 
   useEffect(() => {
     if (userData?.role === "student") {
@@ -44,8 +43,10 @@ const Dashboard = () => {
 
   const { data: classAttendance, isPending: loadingClassAttendance } =
     useFetchClassAttendance(userData, classNoForGraph);
-    
-    classAttendance?.months?.sort((a:returnType,b:returnType) => a.monthNumber - b.monthNumber)    
+
+  classAttendance?.months?.sort(
+    (a: returnType, b: returnType) => a.monthNumber - b.monthNumber,
+  );
 
   const dayIndex = new Date().getDay();
   const mappedIndex = dayIndex === 0 ? 0 : dayIndex - 1;
@@ -54,20 +55,17 @@ const Dashboard = () => {
     timetable?.[mappedIndex]?.periods || [];
 
   if (loading || loadingTimetable || loadingClassAttendance) return <Spinner />;
-  
+
   console.log(classAttendance);
-  
 
-//   const thisMonthsClassAttendance = returnMonthsData(classAttendance.months);
-//   const todaysClassAttendance = resolveClassAttendance(
-//     thisMonthsClassAttendance?.weeks ?? [],
-//   );
-  
-//   const res = processWeeklyData(thisMonthsClassAttendance,new Date(),classAttendance.totalStudents)
-  
-// console.log(res)  
-  
+  //   const thisMonthsClassAttendance = returnMonthsData(classAttendance.months);
+  //   const todaysClassAttendance = resolveClassAttendance(
+  //     thisMonthsClassAttendance?.weeks ?? [],
+  //   );
 
+  //   const res = processWeeklyData(thisMonthsClassAttendance,new Date(),classAttendance.totalStudents)
+
+  // console.log(res)
 
   //   console.log(`todaysClassAttendance:${todaysClassAttendance}`);
 
@@ -75,9 +73,7 @@ const Dashboard = () => {
 
   // }
 
-//   console.log(todaysClassAttendance?.days[0].presentCount === null ? 0 : 100);
-
-
+  //   console.log(todaysClassAttendance?.days[0].presentCount === null ? 0 : 100);
 
   return (
     <div className="w-full min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-6 sm:py-8 lg:py-10 overflow-x-hidden flex">
@@ -107,6 +103,14 @@ const Dashboard = () => {
             title="Total Employees"
             count={schoolData?.totNoOfTeachers}
           />
+        </div>
+        
+        
+         <div
+          className="mb-10 sm:mb-14 animate-fadeIn"
+          style={{ animationDelay: "0.1s" }}
+        >
+          <AnnouncementForDashboard />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">

@@ -1,0 +1,6 @@
+[install]
+# Ensure proper module resolution
+# Bun will resolve these paths correctly
+
+[import]
+modules = { "swiper" = { "swiper/css" = "swiper/dist/swiper.css" } }
