@@ -41,6 +41,15 @@ export type AddUtMarksResponse = {
   message: string;
 };
 
-export type AddUtMarksError = Error; // or AxiosError if you're using axios
+export type AddUtMarksError = Error; 
 
 
+export interface addExamPayload {
+  data: incomingDataPayload[];
+  examDate: Date;
+  subjectName: "Math" | "Science" | "Social" | "Hindi" | "Kannada" | "English";
+  maxMarks: number;
+  type: "FA-1" | "FA-2" | "FA-3" | "FA-4" | "SA-1" | "SA-2";
+}
+
+export type examType = "FA-1" | "FA-2" | "FA-3" | "FA-4" | "SA-1" | "SA-2";

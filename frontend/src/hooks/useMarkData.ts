@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type { userData } from "../types/userData.types";
-import { addUtMarks, fetchExamMarks, fetchUtMarks, fetchUtMarksForStudents } from "../api/marks.api";
+import { addExamMarks, addUtMarks, fetchExamMarks, fetchUtMarks, fetchUtMarksForStudents } from "../api/marks.api";
 import toast from "react-hot-toast";
 
 export const useFetchUtMarks = (classNo:number,userData:userData) => {
@@ -39,6 +39,18 @@ export const useFetchExamMarks = (classNo:number,userData:userData) => {
 export const useAddUtMarks = () => {
   return useMutation({
     mutationFn: addUtMarks,
+    onSuccess: () => {
+      toast.success("ut-Marks added");
+    },
+    onError: () => {
+      toast.error("failed to add ut marks");
+    },
+  });
+};
+
+export const useAddExamMarks = () => {
+  return useMutation({
+    mutationFn: addExamMarks,
     onSuccess: () => {
       toast.success("ut-Marks added");
     },

@@ -1,4 +1,4 @@
-import type { addUTPayload } from "../types/ut.types";
+import type { addExamPayload, addUTPayload } from "../types/ut.types";
 import { api } from "./apiInstance.api"
 
 export const fetchUtMarks = async (classNo: number) => {
@@ -21,7 +21,16 @@ export type AddUtMarksParams = {
   classNo: number;
 };
 
+export type AddExamMarksParams = {
+  props: addExamPayload;
+  classNo: number;
+};
+
 export const addUtMarks = async ({ props, classNo }: AddUtMarksParams) => {
   const res = await api.post(`/marks/ut/${classNo}`, props);
+  return res.data;
+};
+export const addExamMarks = async ({ props, classNo }: AddExamMarksParams) => {
+  const res = await api.post(`/marks/exam/${classNo}`, props);
   return res.data;
 };
