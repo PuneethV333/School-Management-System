@@ -12,9 +12,10 @@ import Student from "./pages/subPages/MarkAttendance/Student";
 import Ut from "./pages/subPages/ViewMark/Ut";
 import Exam from "./pages/subPages/ViewMark/Exam";
 import { AnnouncementsDetails } from "./pages/subPages/Announcement/Details";
-import { Ut as AddUtMarks}  from "./pages/subPages/AddMarks/Ut";
-import { Exams as AddExamMarks}  from "./pages/subPages/AddMarks/Exams";
-import {Main as ViewStudents} from "./pages/subPages/view/Students/Main"
+import { Ut as AddUtMarks } from "./pages/subPages/AddMarks/Ut";
+import { Exams as AddExamMarks } from "./pages/subPages/AddMarks/Exams";
+import { Main as ViewTeachers } from "./pages/subPages/view/Teachers/Main";
+import { Main as ViewStudents } from "./pages/subPages/view/Students/Main";
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
@@ -46,9 +47,10 @@ const App = () => {
             <Route path="students/mark/attendance" element={<Student />} />
             <Route path="marks/ut" element={<Ut />} />
             <Route path="marks/exam" element={<Exam />} />
-            <Route path="add/ut" element={< AddUtMarks/>} />
-            <Route path="add/exam" element={< AddExamMarks/>} />
-            <Route path="view/students" element={< ViewStudents/>} />
+            <Route path="add/ut" element={<AddUtMarks />} />
+            <Route path="add/exam" element={<AddExamMarks />} />
+            <Route path="view/students" element={<ViewStudents />} />
+            <Route path="view/teachers" element={<ViewTeachers />} />
             <Route
               path="announcements/:id"
               element={<AnnouncementsDetails />}

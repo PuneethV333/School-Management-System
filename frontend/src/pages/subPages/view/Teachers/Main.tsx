@@ -1,25 +1,24 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Search, Users } from "lucide-react";
+import { useFetchMe } from "../../../../hooks/useAuth";
+import { useFetchAllTeachersData } from "../../../../hooks/useTeachersData";
+import useIsMobile from "../../../../hooks/useIsMobile";
+import type { teachers } from "../../../../types/teacher.types";
+import TeachersTable from "../../../../components/TeachersTable";
 
-// import TeachersTable from "../utils/TeachersTable";
-// import useIsMobile from "../hooks/useIsMobile";
-// import { useFetchTeachersData } from "../hooks/useData";
-// import { useFetchMe } from "../hooks/useAuth";
-
-const Main = () => {
+export const Main = () => {
   const { data: userData } = useFetchMe();
-  const { data: teachersData = [] } = useFetchTeachersData(userData);
+  const { data: teachersData } = useFetchAllTeachersData(userData);
 
   const isMobile = useIsMobile();
   const [searchName, setSearchName] = useState("");
 
   const headers = ["Profile Pic", "Name", "DOB", "Phone", "Address"];
 
-  const filteredTeachers = teachersData
-    .filter((teacher) =>
+  const filteredTeachers = teachersData?.filter((teacher: teachers) =>
       teacher?.name?.toLowerCase().includes(searchName.toLowerCase()),
     )
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a: teachers, b: teachers) => a.name.localeCompare(b.name));
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 sm:px-6 lg:px-8">
@@ -62,8 +61,8 @@ const Main = () => {
 
         <div className="mb-6 flex items-center justify-between">
           <div className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm font-semibold">
-            {filteredTeachers.length}{" "}
-            {filteredTeachers.length === 1 ? "Teacher" : "Teachers"}
+            {filteredTeachers?.length}{" "}
+            {filteredTeachers?.length === 1 ? "Teacher" : "Teachers"}
           </div>
         </div>
 
@@ -84,14 +83,14 @@ const Main = () => {
                 ))}
               </div>
 
-              {filteredTeachers.length > 0 ? (
+              {filteredTeachers?.length > 0 ? (
                 <div className="divide-y divide-slate-700/30">
-                  {filteredTeachers.map((teacher) => (
+                  {filteredTeachers?.map((teacher: teachers) => (
                     <div
                       key={teacher._id}
                       className="px-6 py-4 bg-slate-800/20 hover:bg-slate-700/30 transition-colors duration-300 text-sm"
                     >
-                      <TeachersTable data={teacher} />
+                      <TeachersTable {...teacher} />
                     </div>
                   ))}
                 </div>
@@ -112,7 +111,7 @@ const Main = () => {
           </div>
         </div>
 
-        {filteredTeachers.length > 0 && (
+        {filteredTeachers?.length > 0 && (
           <div className="mt-8 p-4 bg-slate-800/40 backdrop-blur-sm rounded-xl border border-slate-700/50">
             <p className="text-xs text-slate-400 font-semibold">
               💡 Tip: Hover over rows for better visibility. Use search to find
@@ -124,5 +123,3 @@ const Main = () => {
     </div>
   );
 };
-
-export default Main;
