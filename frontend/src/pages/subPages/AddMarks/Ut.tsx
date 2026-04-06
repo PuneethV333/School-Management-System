@@ -56,7 +56,6 @@ export const Ut = () => {
     }
   }, [classNo, students]);
 
-  console.log(marks.length !== filteredStudents.length);
 
   if (loading) {
     return <Spinner />;

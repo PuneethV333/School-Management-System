@@ -1,4 +1,4 @@
-export interface studentGeneralData {
+export type studentGeneralData = {
   name: string;
   dob: string;
   gender: "Male" | "Female" | "Other";
@@ -51,7 +51,7 @@ export interface Assessment {
   name: string;
   marksObtained: number;
   maxMarks: number;
-  _id:string,
+  _id: string;
   examDate?: string;
 }
 
@@ -59,3 +59,24 @@ export interface Subject {
   subject: string;
   assessments: Assessment[];
 }
+
+export type student = {
+  name: string;
+  authId: string;
+  class: number;
+  rollNo: number;
+  _id:string|number;
+  profilePicUrl:string;
+  dob:string;
+  phone:string|number;
+  gender: "Male" | "Female" | "Other";
+  academicYear: string;
+  section: string;
+  email?: string;
+  satsNo?: string;
+  bloodGroup: "A+" | "A-" | "B+" | "B-" | "O+" | "O-" | "AB+" | "AB-";
+  address:address;
+  father?: father;
+  mother?: mother;
+  guardian: guardian;
+};
