@@ -1,30 +1,53 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AlertCircle, BookOpen, Calendar, Check, Loader2, Search, Trophy, Users } from "lucide-react";
+import {
+  AlertCircle,
+  BookOpen,
+  Calendar,
+  Check,
+  Loader2,
+  Search,
+  Trophy,
+  Users,
+} from "lucide-react";
 import Spinner from "../../../components/Spinner";
 import { useFetchMe } from "../../../hooks/useAuth";
 import { useAddUtMarks } from "../../../hooks/useMarkData";
 import { useState, useEffect } from "react";
-import { getProgress, getStudentMark, handleMarkChange, subjects } from "../../../utils/addUtHelper";
-import type { addUTPayload, incomingDataPayload } from "../../../types/ut.types";
+import {
+  getProgress,
+  getStudentMark,
+  handleMarkChange,
+  subjects,
+} from "../../../utils/addUtHelper";
+import type {
+  addUTPayload,
+  incomingDataPayload,
+} from "../../../types/ut.types";
 import type { userData } from "../../../types/userData.types";
 import toast from "react-hot-toast";
 import { useFetchStudentsByClass } from "../../../hooks/useStudentData";
 
 export const Ut = () => {
   const { data: userData, isPending: loading } = useFetchMe();
-  const { mutate: postUnitTestMarksData, isPending: submitting } = useAddUtMarks();
+  const { mutate: postUnitTestMarksData, isPending: submitting } =
+    useAddUtMarks();
 
   const [classNo, setClassNo] = useState<number>(1);
   const [filteredStudents, setFilteredStudents] = useState<userData[]>([]);
   const [utNo, setUtNo] = useState<number>(1);
   const [maxMarks, setMaxMarks] = useState<number>(25);
-  const [selectedSubject, setSelectedSubject] = useState<"Math" | "Science" | "Social" | "Hindi" | "Kannada" | "English" | "">("");
+  const [selectedSubject, setSelectedSubject] = useState<
+    "Math" | "Science" | "Social" | "Hindi" | "Kannada" | "English" | ""
+  >("");
   const [examDate, setExamDate] = useState<string>("");
   const [marks, setMarks] = useState<incomingDataPayload[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const { data: students, isPending: loading2 } = useFetchStudentsByClass(userData, classNo);
+  const { data: students, isPending: loading2 } = useFetchStudentsByClass(
+    userData,
+    classNo,
+  );
 
   useEffect(() => {
     if ((students?.length ?? 0) > 0 && classNo > 0) {
@@ -32,9 +55,8 @@ export const Ut = () => {
       setMarks([]);
     }
   }, [classNo, students]);
-  
+
   console.log(marks.length !== filteredStudents.length);
-  
 
   if (loading) {
     return <Spinner />;
@@ -69,7 +91,7 @@ export const Ut = () => {
           setMarks([]);
           setMaxMarks(25);
         },
-      }
+      },
     );
   };
 
@@ -89,8 +111,6 @@ export const Ut = () => {
       ></div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* Header */}
         <div className="mb-10 sm:mb-12 animate-fadeIn text-center">
           <div className="inline-flex items-center justify-center p-3 bg-linear-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl border border-cyan-500/30 mb-4">
             <BookOpen className="w-8 h-8 text-cyan-400" />
@@ -103,7 +123,6 @@ export const Ut = () => {
           </p>
         </div>
 
-        {/* Test Details */}
         <div
           className="bg-linear-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl p-6 sm:p-8 mb-8 animate-fadeIn"
           style={{ animationDelay: "0.1s" }}
@@ -142,7 +161,18 @@ export const Ut = () => {
               </label>
               <select
                 value={selectedSubject}
-                onChange={(e) => setSelectedSubject(e.target.value as "Math" | "Science" | "Social" | "Hindi" | "Kannada" | "English" | "")}
+                onChange={(e) =>
+                  setSelectedSubject(
+                    e.target.value as
+                      | "Math"
+                      | "Science"
+                      | "Social"
+                      | "Hindi"
+                      | "Kannada"
+                      | "English"
+                      | "",
+                  )
+                }
                 disabled={submitting}
                 className="w-full px-4 py-3 rounded-xl bg-slate-800/80 backdrop-blur-sm text-white border border-slate-700 hover:border-purple-500 focus:border-purple-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500/20 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
@@ -212,7 +242,6 @@ export const Ut = () => {
           </div>
         </div>
 
-        {/* Students loading state */}
         {loading2 && (
           <div className="text-center py-16">
             <Loader2 className="w-12 h-12 text-cyan-500 animate-spin mx-auto mb-4" />
@@ -220,7 +249,6 @@ export const Ut = () => {
           </div>
         )}
 
-        {/* Empty state */}
         {!loading2 && filteredStudents.length === 0 && (
           <div className="text-center py-24">
             <AlertCircle className="w-16 h-16 text-slate-600 mx-auto mb-4" />
@@ -233,11 +261,8 @@ export const Ut = () => {
           </div>
         )}
 
-        {/* Student list */}
         {!loading2 && filteredStudents.length > 0 && (
           <div className="animate-fadeIn" style={{ animationDelay: "0.2s" }}>
-
-            {/* Progress bar */}
             <div className="bg-linear-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 mb-6">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-lg font-semibold text-white flex items-center gap-2">
@@ -259,7 +284,6 @@ export const Ut = () => {
               </p>
             </div>
 
-            {/* Search */}
             <div className="bg-linear-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 mb-6">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
@@ -274,7 +298,6 @@ export const Ut = () => {
               </div>
             </div>
 
-            {/* Table */}
             <div className="bg-linear-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl">
               <div className="grid grid-cols-12 gap-4 bg-linear-to-r from-slate-700/50 to-slate-800/50 p-4 sm:p-5 font-semibold text-slate-200 border-b border-slate-700">
                 <div className="col-span-2 sm:col-span-1">Roll No</div>
@@ -285,49 +308,58 @@ export const Ut = () => {
               </div>
 
               <div className="max-h-125 overflow-y-auto">
-                {searchFilteredStudents.map((student: userData, index: number) => {
-                  const studentMark = getStudentMark(student.authId, marks);
-                  const isComplete = studentMark !== "";
+                {searchFilteredStudents.map(
+                  (student: userData, index: number) => {
+                    const studentMark = getStudentMark(student.authId, marks);
+                    const isComplete = studentMark !== "";
 
-                  return (
-                    <div
-                      key={student._id}
-                      className={`grid grid-cols-12 gap-4 p-4 sm:p-5 border-b border-slate-700/50 items-center transition-all duration-300 hover:bg-slate-700/20 ${
-                        index % 2 === 0 ? "bg-slate-800/20" : "bg-slate-800/10"
-                      }`}
-                    >
-                      <div className="col-span-2 sm:col-span-1">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-linear-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 font-bold text-cyan-300">
-                          {student.rollNo}
+                    return (
+                      <div
+                        key={student._id}
+                        className={`grid grid-cols-12 gap-4 p-4 sm:p-5 border-b border-slate-700/50 items-center transition-all duration-300 hover:bg-slate-700/20 ${
+                          index % 2 === 0
+                            ? "bg-slate-800/20"
+                            : "bg-slate-800/10"
+                        }`}
+                      >
+                        <div className="col-span-2 sm:col-span-1">
+                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-linear-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 font-bold text-cyan-300">
+                            {student.rollNo}
+                          </div>
+                        </div>
+                        <div className="col-span-6 sm:col-span-8">
+                          <div className="flex items-center gap-3">
+                            <div
+                              className={`w-2 h-2 rounded-full ${isComplete ? "bg-green-400" : "bg-slate-600"} transition-colors duration-300`}
+                            ></div>
+                            <span className="text-white font-medium">
+                              {student.name}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="col-span-4 sm:col-span-3">
+                          <input
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            value={studentMark}
+                            onChange={(e) =>
+                              handleMarkChange(
+                                student,
+                                Number(e.target.value) || 0,
+                                maxMarks,
+                                setMarks,
+                              )
+                            }
+                            disabled={submitting}
+                            placeholder="0"
+                            className="w-full px-4 py-2.5 rounded-lg bg-slate-900/80 border border-slate-600 text-white font-semibold text-center focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300 placeholder:text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                          />
                         </div>
                       </div>
-                      <div className="col-span-6 sm:col-span-8">
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={`w-2 h-2 rounded-full ${isComplete ? "bg-green-400" : "bg-slate-600"} transition-colors duration-300`}
-                          ></div>
-                          <span className="text-white font-medium">
-                            {student.name}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="col-span-4 sm:col-span-3">
-                        <input
-                          type="text"
-                          inputMode="numeric"
-                          pattern="[0-9]*"
-                          value={studentMark}
-                          onChange={(e) =>
-                            handleMarkChange(student, Number(e.target.value) || 0, maxMarks, setMarks)
-                          }
-                          disabled={submitting}
-                          placeholder="0"
-                          className="w-full px-4 py-2.5 rounded-lg bg-slate-900/80 border border-slate-600 text-white font-semibold text-center focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300 placeholder:text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  },
+                )}
               </div>
 
               {searchFilteredStudents.length === 0 && (
@@ -342,7 +374,6 @@ export const Ut = () => {
           </div>
         )}
 
-        {/* Submit */}
         <div
           className="text-center mt-8 animate-fadeIn"
           style={{ animationDelay: "0.3s" }}
@@ -374,16 +405,16 @@ export const Ut = () => {
               )}
             </span>
           </button>
-          {filteredStudents.length > 0 && marks.length !== filteredStudents.length && (
-            <p className="text-sm text-amber-400 mt-3 flex items-center justify-center gap-1">
-              <AlertCircle className="w-4 h-4" />
-              Please enter marks for all students before submitting
-            </p>
-          )}
+          {filteredStudents.length > 0 &&
+            marks.length !== filteredStudents.length && (
+              <p className="text-sm text-amber-400 mt-3 flex items-center justify-center gap-1">
+                <AlertCircle className="w-4 h-4" />
+                Please enter marks for all students before submitting
+              </p>
+            )}
         </div>
       </div>
 
-      {/* Submitting overlay */}
       {submitting && (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-slate-800/90 border border-cyan-500/30 rounded-2xl p-8 flex flex-col items-center gap-4 shadow-2xl">

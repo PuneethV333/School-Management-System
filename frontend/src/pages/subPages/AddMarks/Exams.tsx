@@ -109,7 +109,6 @@ export const Exams = () => {
       ></div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="mb-10 sm:mb-12 animate-fadeIn text-center">
           <div className="inline-flex items-center justify-center p-3 bg-linear-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl border border-cyan-500/30 mb-4">
             <BookOpen className="w-8 h-8 text-cyan-400" />
@@ -122,7 +121,6 @@ export const Exams = () => {
           </p>
         </div>
 
-        {/* Test Details */}
         <div
           className="bg-linear-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl p-6 sm:p-8 mb-8 animate-fadeIn"
           style={{ animationDelay: "0.1s" }}
@@ -255,7 +253,6 @@ export const Exams = () => {
           </div>
         )}
 
-        {/* Empty state */}
         {!loading2 && filteredStudents.length === 0 && (
           <div className="text-center py-24">
             <AlertCircle className="w-16 h-16 text-slate-600 mx-auto mb-4" />
@@ -268,10 +265,8 @@ export const Exams = () => {
           </div>
         )}
 
-        {/* Student list */}
         {!loading2 && filteredStudents.length > 0 && (
           <div className="animate-fadeIn" style={{ animationDelay: "0.2s" }}>
-            {/* Progress bar */}
             <div className="bg-linear-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 mb-6">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-lg font-semibold text-white flex items-center gap-2">
@@ -293,7 +288,6 @@ export const Exams = () => {
               </p>
             </div>
 
-            {/* Search */}
             <div className="bg-linear-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 mb-6">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
@@ -308,7 +302,6 @@ export const Exams = () => {
               </div>
             </div>
 
-            {/* Table */}
             <div className="bg-linear-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl">
               <div className="grid grid-cols-12 gap-4 bg-linear-to-r from-slate-700/50 to-slate-800/50 p-4 sm:p-5 font-semibold text-slate-200 border-b border-slate-700">
                 <div className="col-span-2 sm:col-span-1">Roll No</div>
@@ -385,7 +378,6 @@ export const Exams = () => {
           </div>
         )}
 
-        {/* Submit */}
         <div
           className="text-center mt-8 animate-fadeIn"
           style={{ animationDelay: "0.3s" }}
@@ -427,7 +419,6 @@ export const Exams = () => {
         </div>
       </div>
 
-      {/* Submitting overlay */}
       {submitting && (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-slate-800/90 border border-cyan-500/30 rounded-2xl p-8 flex flex-col items-center gap-4 shadow-2xl">
