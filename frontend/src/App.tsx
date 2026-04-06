@@ -16,6 +16,7 @@ import { Ut as AddUtMarks } from "./pages/subPages/AddMarks/Ut";
 import { Exams as AddExamMarks } from "./pages/subPages/AddMarks/Exams";
 import { Main as ViewTeachers } from "./pages/subPages/view/Teachers/Main";
 import { Main as ViewStudents } from "./pages/subPages/view/Students/Main";
+import {Add as AddAnnouncement} from './pages/subPages/Announcement/Add'
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
@@ -51,6 +52,7 @@ const App = () => {
             <Route path="add/exam" element={<AddExamMarks />} />
             <Route path="view/students" element={<ViewStudents />} />
             <Route path="view/teachers" element={<ViewTeachers />} />
+            <Route path="/add/announcement" element={<AddAnnouncement/>}/>
             <Route
               path="announcements/:id"
               element={<AnnouncementsDetails />}

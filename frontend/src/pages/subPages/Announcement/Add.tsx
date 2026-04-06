@@ -1,33 +1,128 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react"
-// import type { postAnnouncementInput } from "../../../types/announcement.types"
 import { useFetchMe } from "../../../hooks/useAuth";
 import Spinner from "../../../components/Spinner";
 import { usePostAnnouncement } from "../../../hooks/useAnnouncementData";
-import { AlertCircle, Calendar, CheckCircle2, FileText, Loader2, Megaphone, Tag, Upload, Users } from "lucide-react";
+import { AlertCircle, Calendar, CheckCircle2, FileText, Loader2, Megaphone, Tag, Upload, Users, X } from "lucide-react";
 import type { Attachment } from "../../../types/announcement.types";
-import { categories, getCategoryColor, getCategoryIcon, handleInputChange, type category } from "../../../utils/announcementHelpers";
+import { categories, getCategoryIcon, handleInputChange, type category } from "../../../utils/announcementHelpers";
+import toast from "react-hot-toast";
+import { returnUrl } from "../../../utils/cloudinaryHelper";
+
+const allClasses = Array.from({ length: 10 }, (_, i) => i + 1);
 
 export const Add = () => {
     
     
     const {data:userData,isPending:loading} = useFetchMe();
     
-    const {mutate:addAnnouncement,isPending:isLoading} = usePostAnnouncement(userData)
+    const {mutate:addAnnouncement,isPending:isSubmitting} = usePostAnnouncement(userData)
     
     const [formData, setFormData] = useState({
     title: "",
     content: "",
     category: "General",
-    classes: [],
+    classes: [] as number[],
     expireAt: "",
   });
   
-  const [attachments, setAttachments] = useState<Attachment[]>();
-    const [selectAllClasses, setSelectAllClasses] = useState(false);
+  const [attachments, setAttachments] = useState<File[]>([]);
+  const [selectAllClasses, setSelectAllClasses] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files ? Array.from(e.target.files) : [];
+    if (files.length + attachments.length > 5) {
+      toast.error("Maximum 5 files allowed");
+      return;
+    }
+    setAttachments((prev) => [...prev, ...files]);
+  };
+
+  const removeAttachment = (index: number) => {
+    setAttachments((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleClassToggle = (cls: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      classes: prev.classes.includes(cls)
+        ? prev.classes.filter((c) => c !== cls)
+        : [...prev.classes, cls],
+    }));
+  };
+
+  const handleSelectAllClasses = () => {
+    setFormData((prev) => ({
+      ...prev,
+      classes: selectAllClasses ? [] : [...allClasses],
+    }));
+    setSelectAllClasses(!selectAllClasses);
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.title.trim() || !formData.content.trim()) {
+      toast.error("Title and content are required");
+      return;
+    }
+
+    if (formData.classes.length === 0) {
+      toast.error("Please select at least one class");
+      return;
+    }
+
+    setUploading(true);
+
+    try {
+      let uploadedAttachments: Attachment[] = [];
+
+      if (attachments.length) {
+        uploadedAttachments = await Promise.all(
+          attachments.map(async (file) => {
+            const fileUrl = await returnUrl(file);
+            return {
+              fileName: file.name,
+              fileUrl: fileUrl,
+            };
+          })
+        );
+      }
+
+      const payload = {
+        title: formData.title,
+        content: formData.content,
+        category: formData.category as category,
+        classes: formData.classes,
+        attachments: uploadedAttachments,
+        expireAt: formData.expireAt || "",
+      };
+
+      addAnnouncement(payload, {
+        onSuccess: () => {
+          setFormData({
+            title: "",
+            content: "",
+            category: "General",
+            classes: [],
+            expireAt: "",
+          });
+          setAttachments([]);
+          setSelectAllClasses(false);
+        },
+        onSettled: () => {
+          setUploading(false);
+        },
+      });
+    } catch (err) {
+      toast.error("Failed to upload attachments");
+      console.error(err);
+      setUploading(false);
+    }
+  };
+
+  const isLoading = uploading || isSubmitting;
   
-  
-    if(loading || isLoading){
+    if(loading){
         return <Spinner/>
     }
     
@@ -82,7 +177,7 @@ export const Add = () => {
             <textarea
               name="content"
               value={formData.content}
-              onChange={(e) => handleInputChange(e,setFormData)}
+              onChange={(e) => handleInputChange(e as any,setFormData)}
               disabled={isLoading}
               rows={6}
               placeholder="Provide detailed information about the announcement"
@@ -102,7 +197,7 @@ export const Add = () => {
               <select
                 name="category"
                 value={formData.category}
-                onChange={(e) => handleInputChange(e,setFormData)}
+                onChange={(e) => handleInputChange(e as any,setFormData)}
                 disabled={isLoading}
                 className="w-full px-4 py-3 rounded-xl bg-slate-800/80 backdrop-blur-sm text-white border border-slate-700 hover:border-emerald-500 focus:border-emerald-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
@@ -143,18 +238,18 @@ export const Add = () => {
                 type="file"
                 multiple
                 onChange={handleFileChange}
-                disabled={isLoading || (attachments && attachments.length >= 5)}
+                disabled={isLoading || attachments.length >= 5}
                 className="w-full px-4 py-3 rounded-xl bg-slate-800/80 backdrop-blur-sm text-slate-300 border border-slate-700 hover:border-yellow-500 focus:border-yellow-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-500/20 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-yellow-500/20 file:text-yellow-400 hover:file:bg-yellow-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
               />
-              {attachments && attachments.length > 0 && (
+              {attachments.length > 0 && (
                 <div className="space-y-2">
-                  {attachments?.map((file, index) => (
+                  {attachments.map((file, index) => (
                     <div
                       key={index}
                       className="flex items-center justify-between p-3 bg-slate-800/60 rounded-lg border border-slate-700/50"
                     >
                       <span className="text-slate-300 text-sm truncate flex-1">
-                        {file.fileName}
+                        {file.name}
                       </span>
                       <button
                         onClick={() => removeAttachment(index)}
@@ -220,7 +315,7 @@ export const Add = () => {
           {formData.category && (
             <div className="animate-fadeIn" style={{ animationDelay: "0.6s" }}>
               <div
-                className={`p-4 rounded-xl bg-linear-to-r ${getCategoryColor(formData.category as category)} text-white font-bold text-center shadow-lg`}
+                className={`p-4 rounded-xl bg-linear-to-r ${categories.find(c => c.value === formData.category)?.color || "from-slate-500 to-slate-600"} text-white font-bold text-center shadow-lg`}
               >
                 <span className="text-2xl mr-2">{getCategoryIcon(formData.category as category)}</span>
                 {formData.category} Announcement
@@ -240,14 +335,14 @@ export const Add = () => {
                 !formData.content.trim() ||
                 formData.classes.length === 0
               }
-              className={`group relative px-10 py-4 rounded-xl bg-linear-to-r ${getCategoryColor(formData.category as category)} hover:shadow-2xl font-bold text-white text-lg shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden`}
+              className={`group relative px-10 py-4 rounded-xl bg-linear-to-r ${categories.find(c => c.value === formData.category)?.color || "from-slate-500 to-slate-600"} hover:shadow-2xl font-bold text-white text-lg shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden`}
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
               <span className="relative flex items-center justify-center gap-2">
                 {isLoading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    {isLoading ? "Uploading Files..." : "Creating..."}
+                    {uploading ? "Uploading Files..." : "Creating..."}
                   </>
                 ) : (
                   <>
@@ -271,7 +366,7 @@ export const Add = () => {
       {isLoading && (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50">
           <div
-            className={`bg-slate-800/90 border border-transparent bg-linear-to-r ${getCategoryColor()} p-0.5 rounded-2xl`}
+            className={`bg-slate-800/90 border border-transparent bg-linear-to-r ${categories.find(c => c.value === formData.category)?.color || "from-slate-500 to-slate-600"} p-0.5 rounded-2xl`}
           >
             <div className="bg-slate-900 rounded-[14px] p-8 flex flex-col items-center gap-4 shadow-2xl">
               <Loader2 className="w-12 h-12 text-blue-400 animate-spin" />
@@ -300,4 +395,3 @@ export const Add = () => {
     </div>
   )
 }
- 

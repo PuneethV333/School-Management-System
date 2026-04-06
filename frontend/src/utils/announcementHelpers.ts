@@ -1,6 +1,4 @@
 import type React from "react";
-import toast from "react-hot-toast";
-import type { Attachment } from "../types/announcement.types";
 
 export type category =
   | "General"
@@ -68,13 +66,13 @@ export const categories = [
 ];
 
 export const handleInputChange = (
-  e: React.ChangeEvent<HTMLInputElement>,
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   setFormData: React.Dispatch<
     React.SetStateAction<{
       title: string;
       content: string;
       category: string;
-      classes: never[];
+      classes: number[];
       expireAt: string;
     }>
   >,
@@ -82,19 +80,3 @@ export const handleInputChange = (
   const { name, value } = e.target;
   setFormData((prev) => ({ ...prev, [name]: value }));
 };
-export const handleFileChange = (
-  e: React.ChangeEvent<HTMLInputElement>,
-  attachments: Attachment[] | undefined,
-  setAttachments: React.Dispatch<
-    React.SetStateAction<Attachment[] | undefined>
-  >,
-) => {
-  const files = e.target.files ? Array.from(e.target.files) : [];
-  if (files.length + (attachments?.length || 0) > 5) {
-    toast.error("Maximum 5 files allowed");
-    return;
-  }
-  setAttachments((prev) => [...prev, ...files]);
-};
-
-
