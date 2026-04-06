@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { userData } from "../types/userData.types";
-import { fetchAnnouncement } from "../api/announcement.api";
+import { fetchAnnouncement, postAnnouncement } from "../api/announcement.api";
+import toast from "react-hot-toast";
 
 export const useFetchAnnouncementData = (userData:userData) => {
     return useQuery({
@@ -9,5 +10,19 @@ export const useFetchAnnouncementData = (userData:userData) => {
         select:(res) => res.data,
         enabled:!!userData.authId,
         retry:false
+    })
+}
+
+export const usePostAnnouncement = (userData:userData) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn:postAnnouncement,
+        onSuccess:(res) => {
+            queryClient.setQueryData(['announcement',userData?.authId],res.data)
+            toast.success('added announcement')
+        },
+        onError:(err) => {
+            toast.error(err?.message)
+        }
     })
 }

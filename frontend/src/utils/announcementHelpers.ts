@@ -1,3 +1,7 @@
+import type React from "react";
+import toast from "react-hot-toast";
+import type { Attachment } from "../types/announcement.types";
+
 export type category =
   | "General"
   | "Exam"
@@ -32,24 +36,65 @@ export const getCategoryColor = (category: category) => {
   return colors[category] || colors.General;
 };
 
-export const getCategoryIcon = (categoryDashboard:category) => {
-    switch (categoryDashboard) {
-      case "Emergency":
-        return "🚨";
-      case "Exam":
-        return "📝";
-      case "Holiday":
-        return "🎉";
-      case "Event":
-        return "🎪";
-      case "Fee":
-        return "💰";
-      default:
-        return "📢";
-    }
-  };
-  
+export const getCategoryIcon = (categoryDashboard: category) => {
+  switch (categoryDashboard) {
+    case "Emergency":
+      return "🚨";
+    case "Exam":
+      return "📝";
+    case "Holiday":
+      return "🎉";
+    case "Event":
+      return "🎪";
+    case "Fee":
+      return "💰";
+    default:
+      return "📢";
+  }
+};
+
 export const truncateText = (text: string, maxLength: number): string => {
-  if (!text) return ""
-  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text
-}
+  if (!text) return "";
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+};
+
+export const categories = [
+  { value: "General", color: "from-slate-500 to-slate-600", icon: "📢" },
+  { value: "Exam", color: "from-blue-500 to-cyan-500", icon: "📝" },
+  { value: "Holiday", color: "from-green-500 to-emerald-500", icon: "🎉" },
+  { value: "Event", color: "from-purple-500 to-pink-500", icon: "🎪" },
+  { value: "Fee", color: "from-orange-500 to-amber-500", icon: "💰" },
+  { value: "Emergency", color: "from-red-500 to-rose-500", icon: "🚨" },
+];
+
+export const handleInputChange = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  setFormData: React.Dispatch<
+    React.SetStateAction<{
+      title: string;
+      content: string;
+      category: string;
+      classes: never[];
+      expireAt: string;
+    }>
+  >,
+) => {
+  const { name, value } = e.target;
+  setFormData((prev) => ({ ...prev, [name]: value }));
+};
+export const handleFileChange = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  attachments: Attachment[] | undefined,
+  setAttachments: React.Dispatch<
+    React.SetStateAction<Attachment[] | undefined>
+  >,
+) => {
+  const files = e.target.files ? Array.from(e.target.files) : [];
+  if (files.length + (attachments?.length || 0) > 5) {
+    toast.error("Maximum 5 files allowed");
+    return;
+  }
+  setAttachments((prev) => [...prev, ...files]);
+};
+
+
