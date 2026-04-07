@@ -9,14 +9,11 @@ import type { showTodaysClassesProps } from "../../types/showTodaysClasses.types
 import { useFetchTimeTable } from "../../hooks/useAcademicData";
 import { useState, useEffect } from "react";
 import { useFetchClassAttendance } from "../../hooks/useAttendanceData";
-import type { returnType} from "../../utils/returnMonthsData";
+import type { returnType } from "../../utils/returnMonthsData";
 
 import SelectClass from "../../components/SelectClass";
 import SelectType from "../../components/SelectType";
 import { Dashboard as AnnouncementForDashboard } from "./Announcement/Dashboard";
-
-
-
 
 const Dashboard = () => {
   const { data: userData } = useFetchMe();
@@ -54,25 +51,6 @@ const Dashboard = () => {
 
   if (loading || loadingTimetable || loadingClassAttendance) return <Spinner />;
 
-  console.log(classAttendance);
-
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
   return (
     <div className="w-full min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-6 sm:py-8 lg:py-10 overflow-x-hidden flex">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -102,9 +80,8 @@ const Dashboard = () => {
             count={schoolData?.totNoOfTeachers}
           />
         </div>
-        
-        
-         <div
+
+        <div
           className="mb-10 sm:mb-14 animate-fadeIn"
           style={{ animationDelay: "0.1s" }}
         >
@@ -116,7 +93,10 @@ const Dashboard = () => {
             <div className="mb-4 flex justify-between ">
               <SelectType dataType={dataType} setDataType={setDataType} />
 
-              <SelectClass classNo={classNoForGraph} setClassNo={setClassNoForGraph} />
+              <SelectClass
+                classNo={classNoForGraph}
+                setClassNo={setClassNoForGraph}
+              />
             </div>
           </div>
 
