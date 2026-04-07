@@ -6,7 +6,6 @@ import { useFetchTimeTable } from "../../../../hooks/useAcademicData";
 import Spinner from "../../../../components/Spinner";
 import type { DaySchedule, Period } from "../../../../types/timetable.types";
 
-
 export const Teacher = () => {
   const { data: userData, isPending: loading } = useFetchMe();
   const [classNo, setClassNo] = useState<number>(1);
@@ -45,22 +44,20 @@ export const Teacher = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 sm:px-6 lg:px-8">
-      {/* Animated Background */}
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" />
       </div>
 
       <div className="relative max-w-7xl mx-auto">
-        {/* Header */}
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl">
+            <div className="p-3 bg-linear-to-br from-blue-500 to-cyan-500 rounded-2xl">
               <Calendar className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-5xl font-black bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+              <h1 className="text-5xl font-black bg-linear-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
                 Class Timetable
               </h1>
               <p className="text-slate-400 text-sm mt-1">
@@ -70,23 +67,21 @@ export const Teacher = () => {
           </div>
         </div>
 
-        {/* Class Selector */}
         <div className="mb-8">
           <div className="max-w-md">
             <SelectClass classNo={classNo} setClassNo={setClassNo} />
           </div>
         </div>
 
-        {/* Day Tabs */}
         <div className="mb-8 bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-slate-700/50 overflow-hidden">
           <div className="flex overflow-x-auto scrollbar-thin scrollbar-thumb-slate-700">
             {days.map((day) => (
               <button
                 key={day}
                 onClick={() => setSelectedDay(day)}
-                className={`flex-shrink-0 px-6 py-4 text-sm font-semibold transition-all duration-300 ${
+                className={`shrink-0 px-6 py-4 text-sm font-semibold transition-all duration-300 ${
                   selectedDay === day
-                    ? "bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-cyan-300 border-b-2 border-cyan-400"
+                    ? "bg-linear-to-r from-blue-500/20 to-cyan-500/20 text-cyan-300 border-b-2 border-cyan-400"
                     : "text-slate-400 hover:text-slate-200 hover:bg-slate-700/30"
                 }`}
               >
@@ -96,7 +91,6 @@ export const Teacher = () => {
           </div>
         </div>
 
-        {/* Period Count Badge */}
         <div className="mb-6 flex items-center justify-between">
           <div className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm font-semibold">
             {currentDayData?.periods.length || 0}{" "}
@@ -104,7 +98,6 @@ export const Teacher = () => {
           </div>
         </div>
 
-        {/* Timetable */}
         <div className="bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-slate-700/50 overflow-hidden mb-6">
           <div className="p-6">
             <div className="flex items-center gap-2 mb-6">
@@ -119,10 +112,9 @@ export const Teacher = () => {
                 const breakInfo = getBreakInfo(period, index);
                 return (
                   <div key={period.periodNumber}>
-                    {/* Break Indicator */}
                     {breakInfo && (
-                      <div className="flex items-center gap-3 py-3 px-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-xl mb-3 backdrop-blur-sm">
-                        <div className="flex-shrink-0">
+                      <div className="flex items-center gap-3 py-3 px-4 bg-linear-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-xl mb-3 backdrop-blur-sm">
+                        <div className="shrink-0">
                           <div className="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">
                             <Clock className="w-5 h-5 text-amber-400" />
                           </div>
@@ -139,16 +131,13 @@ export const Teacher = () => {
                       </div>
                     )}
 
-                    {/* Period Card */}
                     <div className="flex items-center gap-4 p-4 bg-slate-800/60 border border-slate-700/50 rounded-xl hover:bg-slate-700/40 hover:border-blue-500/50 transition-all duration-300 group">
-                      {/* Period Number */}
-                      <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center border border-blue-500/30 group-hover:border-blue-400/50 transition-all">
-                        <span className="text-xl font-black bg-gradient-to-br from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                      <div className="shrink-0 w-14 h-14 bg-linear-to-br from-blue-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center border border-blue-500/30 group-hover:border-blue-400/50 transition-all">
+                        <span className="text-xl font-black bg-linear-to-br from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                           {period.periodNumber}
                         </span>
                       </div>
 
-                      {/* Subject & Time */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <BookOpen className="w-4 h-4 text-cyan-400" />
@@ -167,8 +156,7 @@ export const Teacher = () => {
                         </div>
                       </div>
 
-                      {/* Teacher Badge */}
-                      <div className="hidden sm:flex flex-shrink-0 items-center gap-2 px-3 py-2 bg-slate-700/50 rounded-lg border border-slate-600/50">
+                      <div className="hidden sm:flex shrink-0 items-center gap-2 px-3 py-2 bg-slate-700/50 rounded-lg border border-slate-600/50">
                         <Users className="w-4 h-4 text-slate-400" />
                         <span className="text-xs font-medium text-slate-300">
                           ID: {period.teacher.slice(-4)}
@@ -180,33 +168,31 @@ export const Teacher = () => {
               })}
             </div>
 
-            {/* Summary Stats */}
             <div className="mt-8 pt-6 border-t border-slate-700/50">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/30 rounded-xl p-4 backdrop-blur-sm">
+                <div className="bg-linear-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/30 rounded-xl p-4 backdrop-blur-sm">
                   <p className="text-xs font-bold text-blue-400 uppercase tracking-wider mb-1">
                     Total Periods
                   </p>
-                  <p className="text-3xl font-black bg-gradient-to-br from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                  <p className="text-3xl font-black bg-linear-to-br from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                     {currentDayData?.periods.length || 0}
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/30 rounded-xl p-4 backdrop-blur-sm">
+                <div className="bg-linear-to-br from-green-500/10 to-green-500/5 border border-green-500/30 rounded-xl p-4 backdrop-blur-sm">
                   <p className="text-xs font-bold text-green-400 uppercase tracking-wider mb-1">
                     Start Time
                   </p>
-                  <p className="text-3xl font-black bg-gradient-to-br from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                  <p className="text-3xl font-black bg-linear-to-br from-green-400 to-emerald-400 bg-clip-text text-transparent">
                     {currentDayData?.periods[0]?.startTime || "-"}
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/30 rounded-xl p-4 backdrop-blur-sm">
+                <div className="bg-linear-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/30 rounded-xl p-4 backdrop-blur-sm">
                   <p className="text-xs font-bold text-purple-400 uppercase tracking-wider mb-1">
                     End Time
                   </p>
-                  <p className="text-3xl font-black bg-gradient-to-br from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    {currentDayData?.periods[
-                      currentDayData.periods.length - 1
-                    ]?.endTime || "-"}
+                  <p className="text-3xl font-black bg-linear-to-br from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    {currentDayData?.periods[currentDayData.periods.length - 1]
+                      ?.endTime || "-"}
                   </p>
                 </div>
               </div>
@@ -214,7 +200,6 @@ export const Teacher = () => {
           </div>
         </div>
 
-        {/* Weekly Overview */}
         <div className="bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-slate-700/50 overflow-hidden">
           <div className="p-6">
             <div className="flex items-center gap-2 mb-6">
@@ -226,7 +211,7 @@ export const Teacher = () => {
             <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-slate-700">
               <table className="min-w-full">
                 <thead>
-                  <tr className="bg-gradient-to-r from-blue-900/40 to-cyan-900/40 border-b border-slate-700/50">
+                  <tr className="bg-linear-to-r from-blue-900/40 to-cyan-900/40 border-b border-slate-700/50">
                     <th className="px-4 py-3 text-left text-xs font-bold text-slate-300 uppercase tracking-wider">
                       Day
                     </th>
@@ -272,11 +257,11 @@ export const Teacher = () => {
           </div>
         </div>
 
-        {/* Tip */}
         {currentDayData && currentDayData.periods.length > 0 && (
           <div className="mt-8 p-4 bg-slate-800/40 backdrop-blur-sm rounded-xl border border-slate-700/50">
             <p className="text-xs text-slate-400 font-semibold">
-              💡 Tip: Click on any day in the weekly overview to view its detailed schedule.
+              💡 Tip: Click on any day in the weekly overview to view its
+              detailed schedule.
             </p>
           </div>
         )}
