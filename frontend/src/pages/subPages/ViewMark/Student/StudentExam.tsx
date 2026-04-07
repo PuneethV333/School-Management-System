@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { useState } from "react";
 import { useFetchMe } from "../../../../hooks/useAuth";
 import { useFetchExamMarks } from "../../../../hooks/useMarkData";
 import Spinner from "../../../../components/Spinner";

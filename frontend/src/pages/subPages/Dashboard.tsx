@@ -9,16 +9,14 @@ import type { showTodaysClassesProps } from "../../types/showTodaysClasses.types
 import { useFetchTimeTable } from "../../hooks/useAcademicData";
 import { useState, useEffect } from "react";
 import { useFetchClassAttendance } from "../../hooks/useAttendanceData";
-import {
-  /*returnMonthsData,*/ type returnType,
-} from "../../utils/returnMonthsData";
-// import { resolveClassAttendance } from "../../utils/resolveClassAttendance";
+import type { returnType} from "../../utils/returnMonthsData";
+
 import SelectClass from "../../components/SelectClass";
 import SelectType from "../../components/SelectType";
 import { Dashboard as AnnouncementForDashboard } from "./Announcement/Dashboard";
-// import { useFetchExamMarks } from "../../hooks/useMarkData";
-// import { processWeeklyData } from "../../utils/processWeekLyData";
-// import { sortAttendanceData } from "../../utils/sort";
+
+
+
 
 const Dashboard = () => {
   const { data: userData } = useFetchMe();
@@ -58,22 +56,22 @@ const Dashboard = () => {
 
   console.log(classAttendance);
 
-  //   const thisMonthsClassAttendance = returnMonthsData(classAttendance.months);
-  //   const todaysClassAttendance = resolveClassAttendance(
-  //     thisMonthsClassAttendance?.weeks ?? [],
-  //   );
+  
+  
+  
+  
 
-  //   const res = processWeeklyData(thisMonthsClassAttendance,new Date(),classAttendance.totalStudents)
+  
 
-  // console.log(res)
+  
 
-  //   console.log(`todaysClassAttendance:${todaysClassAttendance}`);
+  
 
-  // var inputObj:dashboardGraphInputProps = {
+  
 
-  // }
+  
 
-  //   console.log(todaysClassAttendance?.days[0].presentCount === null ? 0 : 100);
+  
 
   return (
     <div className="w-full min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-6 sm:py-8 lg:py-10 overflow-x-hidden flex">
