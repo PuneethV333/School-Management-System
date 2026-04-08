@@ -1,3 +1,1 @@
-export type subject = {
-    subject:"Math" | "Science" | "Social" | "Hindi" | "Kannada" | "English"
-}
+export type subject = "Math" | "Science" | "Social" | "Hindi" | "Kannada" | "English"

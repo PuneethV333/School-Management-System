@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { userData } from "../types/userData.types";
 import { fetchSyllabus, fetchTimeTableData } from "../api/academic.api";
-import type { subject } from "../types/academic.types";
 
 export const useFetchTimeTable = (userData: userData, classNo: number) => {
   return useQuery({
@@ -13,10 +12,10 @@ export const useFetchTimeTable = (userData: userData, classNo: number) => {
   });
 };
 
-export const useFetchSyllabus = (userData:userData,subject:subject) => {
+export const useFetchSyllabus = (userData:userData,classNo:number) => {
     return useQuery({
-        queryKey:['syllabus',subject],
-        queryFn:() => fetchSyllabus(subject),
+        queryKey:['syllabus',classNo],
+        queryFn:() => fetchSyllabus(classNo),
         select: (res) => res.data,
         enabled:!!userData.authId,
         retry:false,

@@ -18,6 +18,7 @@ import { Main as ViewTeachers } from "./pages/subPages/view/Teachers/Main";
 import { Main as ViewStudents } from "./pages/subPages/view/Students/Main";
 import {Add as AddAnnouncement} from './pages/subPages/Announcement/Add'
 import {Main as TimeTable} from './pages/subPages/view/Timetable/Main'
+import {Main as Syllabus} from './pages/subPages/Syllabus/Main'
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
@@ -55,6 +56,7 @@ const App = () => {
             <Route path="view/teachers" element={<ViewTeachers />} />
             <Route path="/add/announcement" element={<AddAnnouncement/>}/>
             <Route path="/timetable" element={<TimeTable/>}/>
+            <Route path="/syllabus" element={<Syllabus/>}/>
             <Route
               path="announcements/:id"
               element={<AnnouncementsDetails />}
