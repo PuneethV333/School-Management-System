@@ -92,10 +92,10 @@ export const Main = () => {
   }
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-10">
+    <div className="w-full min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-10">
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-4xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-black bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
             Student Profile
           </h1>
           {studentData.academicYear && (
@@ -129,7 +129,7 @@ export const Main = () => {
             </div>
 
             <div className="flex-1 min-w-0">
-              <h2 className="text-3xl font-bold text-white mb-2 break-words">
+              <h2 className="text-3xl font-bold text-white mb-2 wrap-break-word">
                 {studentData.name}
               </h2>
 
