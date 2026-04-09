@@ -10,8 +10,8 @@ export type iconCard = {
 
 export type sectionCard = {
     title: string;
-    children: ReactNode;
-    icon: ForwardRefExoticComponent<Omit<LucideProps,"ref">>;
+    children?: ReactNode;
+    icon?: ForwardRefExoticComponent<Omit<LucideProps,"ref">>;
 }
 
 export type errorState = {

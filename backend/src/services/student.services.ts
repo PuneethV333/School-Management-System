@@ -162,5 +162,4 @@ export const changeProfilePicBasedOnRole = async (payload:changeProfilePicInput)
         user = await Authority.findOneAndUpdate({authId:payload.authId},{profilePicUrl:payload.url});
     }
     return user;
-    
 };

@@ -1,6 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react-hooks/static-components */
-import { type ChangeEvent } from "react";
 import {
   User,
   Mail,
@@ -30,8 +28,10 @@ export const Main = () => {
     isLoading: userLoading,
     error: userError,
   } = useFetchMe();
+  
   const { id } = useParams();
-  if (!id) {
+  
+  if(!id){
     return;
   }
 
@@ -40,6 +40,16 @@ export const Main = () => {
     isLoading: studentsLoading,
     error: studentsError,
   } = useFetchTeacherById(userData, id);
+
+  
+  if (!id) {
+    return (
+      <ErrorState
+        title="Missing Student ID"
+        message="No student ID provided in the URL"
+      />
+    );
+  }
 
   if (userLoading || studentsLoading) {
     return <Spinner />;
@@ -82,10 +92,10 @@ export const Main = () => {
   }
 
   return (
-    <div className="w-full min-h-screen bg-l-to-br from-slate-950 via-slate-900 to-slate-950 py-10">
+    <div className="w-full min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-10">
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-8">
-          <h1 className="text-4xl font-black bg-l-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
             Student Profile
           </h1>
           {studentData.academicYear && (
@@ -105,8 +115,8 @@ export const Main = () => {
                 src={studentData.profilePicUrl}
                 alt={studentData.name}
                 className="w-36 h-36 rounded-full object-cover border-4 border-slate-700 shadow-lg"
-                onError={(e: ChangeEvent<HTMLImageElement>) => {
-                  e.target.src =
+                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                  e.currentTarget.src =
                     "https://via.placeholder.com/144?text=No+Image";
                 }}
               />
@@ -119,7 +129,7 @@ export const Main = () => {
             </div>
 
             <div className="flex-1 min-w-0">
-              <h2 className="text-3xl font-bold text-white mb-2 warp-break-words">
+              <h2 className="text-3xl font-bold text-white mb-2 break-words">
                 {studentData.name}
               </h2>
 
@@ -289,5 +299,3 @@ export const Main = () => {
     </div>
   );
 };
-
-

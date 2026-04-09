@@ -21,6 +21,7 @@ import {Main as TimeTable} from './pages/subPages/view/Timetable/Main'
 import {Main as Syllabus} from './pages/subPages/Syllabus/Main'
 import { Main as  TeacherProfile} from "./pages/subPages/Profile/TeacherProfile/Main";
 import { Main as  StudentProfile} from "./pages/subPages/Profile/Student/Main";
+import { Main as  Profile} from "./pages/subPages/Profile/My/Main";
 
 
 const App = () => {
@@ -65,6 +66,7 @@ const App = () => {
               element={<AnnouncementsDetails />}
             />
              <Route path="student/profile/:id" element={<StudentProfile />} />
+             <Route path="profile" element={<Profile/>} />
             <Route path="teacher/profile/:id" element={<TeacherProfile />} />
           </Route>
         </Routes>
