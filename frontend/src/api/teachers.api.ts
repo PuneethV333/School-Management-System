@@ -5,3 +5,8 @@ export const fetchTeachersData = async () => {
     return res.data;
 }
 
+export const fetchTeacherById = async (id:string) => {
+  const res = await api.get(`/teacher/${id}`);
+  return res.data;
+};
+

@@ -24,7 +24,7 @@ import {
 } from "../../../../components/StudentProfileHelperComponents";
 import Spinner from "../../../../components/Spinner";
 
-export const Student = () => {
+export const Main = () => {
   const {
     data: userData,
     isLoading: userLoading,

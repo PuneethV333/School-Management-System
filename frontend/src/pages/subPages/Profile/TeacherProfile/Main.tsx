@@ -16,13 +16,13 @@ import {
 import { useFetchMe } from "../../../../hooks/useAuth";
 import { useParams } from "react-router-dom";
 import { formatDate } from "../../../../utils/DisplayMonthlyAttendanceHelpers";
-import { useFetchStudentById } from "../../../../hooks/useStudentData";
 import {
   ErrorState,
   InfoCard,
   SectionCard,
 } from "../../../../components/StudentProfileHelperComponents";
 import Spinner from "../../../../components/Spinner";
+import { useFetchTeacherById } from "../../../../hooks/useTeachersData";
 
 export const Main = () => {
   const {
@@ -39,7 +39,7 @@ export const Main = () => {
     data: studentData,
     isLoading: studentsLoading,
     error: studentsError,
-  } = useFetchStudentById(userData, id);
+  } = useFetchTeacherById(userData, id);
 
   if (userLoading || studentsLoading) {
     return <Spinner />;

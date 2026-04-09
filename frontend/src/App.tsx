@@ -19,6 +19,9 @@ import { Main as ViewStudents } from "./pages/subPages/view/Students/Main";
 import {Add as AddAnnouncement} from './pages/subPages/Announcement/Add'
 import {Main as TimeTable} from './pages/subPages/view/Timetable/Main'
 import {Main as Syllabus} from './pages/subPages/Syllabus/Main'
+import { Main as  TeacherProfile} from "./pages/subPages/Profile/TeacherProfile/Main";
+import { Main as  StudentProfile} from "./pages/subPages/Profile/Student/Main";
+
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
@@ -61,6 +64,8 @@ const App = () => {
               path="announcements/:id"
               element={<AnnouncementsDetails />}
             />
+             <Route path="student/profile/:id" element={<StudentProfile />} />
+            <Route path="teacher/profile/:id" element={<TeacherProfile />} />
           </Route>
         </Routes>
       </Suspense>
