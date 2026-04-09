@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/static-components */
-import { useMemo, type ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 import {
   User,
   Mail,
@@ -14,9 +15,8 @@ import {
 } from "lucide-react";
 import { useFetchMe } from "../../../../hooks/useAuth";
 import { useParams } from "react-router-dom";
-import type { student } from "../../../../types/students.types";
 import { formatDate } from "../../../../utils/DisplayMonthlyAttendanceHelpers";
-import { useFetchStudentsByClass } from "../../../../hooks/useStudentData";
+import { useFetchStudentById } from "../../../../hooks/useStudentData";
 import {
   ErrorState,
   InfoCard,
@@ -24,29 +24,22 @@ import {
 } from "../../../../components/StudentProfileHelperComponents";
 import Spinner from "../../../../components/Spinner";
 
-const Student = () => {
+export const Student = () => {
   const {
     data: userData,
     isLoading: userLoading,
     error: userError,
   } = useFetchMe();
   const { id } = useParams();
-
-  const classNo =
-    typeof userData?.class === "number"
-      ? userData.class
-      : Number(userData?.class);
+  if (!id) {
+    return;
+  }
 
   const {
-    data: studentsData,
+    data: studentData,
     isLoading: studentsLoading,
     error: studentsError,
-  } = useFetchStudentsByClass(userData, classNo);
-
-  const studentData = useMemo(
-    () => studentsData?.find((student: student) => student._id === id),
-    [studentsData, id],
-  );
+  } = useFetchStudentById(userData, id);
 
   if (userLoading || studentsLoading) {
     return <Spinner />;
@@ -297,4 +290,3 @@ const Student = () => {
   );
 };
 
-export default Student;

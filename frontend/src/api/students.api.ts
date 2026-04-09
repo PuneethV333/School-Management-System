@@ -8,6 +8,11 @@ export const fetchStudentsByClass = async (classNo?: number, section = "A") => {
   return res.data;
 };
 
+export const fetchStudentById = async (id:string) => {
+  const res = await api.get(`/student/${id}`);
+  return res.data;
+};
+
 export const createNewStudent = async (studentPayload: addStudentInput) => {
   const res = await api.post("/student/", studentPayload);
   return res.data;

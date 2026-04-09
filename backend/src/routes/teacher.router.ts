@@ -5,5 +5,6 @@ import authMiddleware from "../middleware/auth.middleware";
 export const teacherRouter = Router();
 
 teacherRouter.get('/',authMiddleware,teacherController.getTeachers);
+teacherRouter.get('/:id',authMiddleware,teacherController.getTeacherById);
 teacherRouter.post('/newTeacher',authMiddleware,teacherController.addTeacher);
 
