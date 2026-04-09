@@ -3,7 +3,7 @@ import { api } from "./apiInstance.api";
 
 
 
-export const fetchStudentsByClass = async (classNo: number, section = "A") => {
+export const fetchStudentsByClass = async (classNo?: number, section = "A") => {
   const res = await api.get(`/student/${classNo}/${section}`);
   return res.data;
 };

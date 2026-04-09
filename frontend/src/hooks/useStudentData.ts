@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 export const useFetchStudentsByClass = (
   userData: userData,
-  classNo: number,
+  classNo?: number,
   section = "A",
 ) =>
   useQuery({
@@ -56,3 +56,9 @@ export const useChangeProfilePic = () => {
     },
   });
 };
+
+export const useFetchAllStudents = (userData:userData) => {
+    return useQuery({
+        queryFn
+    })
+}

@@ -5,7 +5,6 @@ import { getUserData } from "../services/getUserData.services";
 import { IStudent } from "../models/student.module";
 import { getTimeTable } from "../services/academic.services";
 import { getVal, setValKey } from "../utils/redis.utils";
-import { SUBJECT_MAP } from "../contants/subject.contants";
 import Syllabus from "../models/syllabus.module";
 
 
