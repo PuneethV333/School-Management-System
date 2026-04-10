@@ -55,8 +55,6 @@ const Dashboard = () => {
   return (
     <div className="w-full min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 py-6 sm:py-8 lg:py-10 overflow-x-hidden flex">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-
-        {/* Page heading */}
         <div className="mb-8 sm:mb-12">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black bg-linear-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-2">
             Dashboard
@@ -66,45 +64,60 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Stat cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-8">
-          <CountCard icon={GraduationCap} title="Total Students"  count={schoolData?.totNoOfStudents} />
-          <CountCard icon={UsersRound}    title="Total Teachers"  count={schoolData?.totNoOfTeachers} />
-          <CountCard icon={IdCard}        title="Total Employees" count={schoolData?.totNoOfTeachers} />
+          <CountCard
+            icon={GraduationCap}
+            title="Total Students"
+            count={schoolData?.totNoOfStudents}
+          />
+          <CountCard
+            icon={UsersRound}
+            title="Total Teachers"
+            count={schoolData?.totNoOfTeachers}
+          />
+          <CountCard
+            icon={IdCard}
+            title="Total Employees"
+            count={schoolData?.totNoOfTeachers}
+          />
         </div>
 
-        {/* Announcements */}
-        <div className="mb-10 sm:mb-14 animate-fadeIn" style={{ animationDelay: "0.1s" }}>
+        <div
+          className="mb-10 sm:mb-14 animate-fadeIn"
+          style={{ animationDelay: "0.1s" }}
+        >
           <AnnouncementForDashboard />
         </div>
 
-        {/* Main grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
-
-          {/* ── Attendance card ─────────────────────────────────────────── */}
           <div className="lg:col-span-2 bg-slate-900 border border-slate-700/60 rounded-2xl p-5 shadow-lg shadow-black/30">
-            {/* Controls row — select type + optional class picker */}
             <div className="flex items-center justify-between gap-3 mb-5">
               <SelectType dataType={dataType} setDataType={setDataType} />
               {!isStudent && (
-                <SelectClass classNo={classNoForGraph} setClassNo={setClassNoForGraph} />
+                <SelectClass
+                  classNo={classNoForGraph}
+                  setClassNo={setClassNoForGraph}
+                />
               )}
             </div>
 
-            {/* ✅ Chart rendered OUTSIDE the flex row */}
             {classAttendance ? (
-              <Attendance classAttendance={classAttendance} dataType={dataType} />
+              <Attendance
+                classAttendance={classAttendance}
+                dataType={dataType}
+              />
             ) : (
               <div className="flex items-center justify-center h-64">
                 <div className="text-center">
                   <div className="text-5xl mb-4">📊</div>
-                  <p className="text-slate-400 text-lg font-semibold">Loading attendance data…</p>
+                  <p className="text-slate-400 text-lg font-semibold">
+                    Loading attendance data…
+                  </p>
                 </div>
               </div>
             )}
           </div>
 
-          {/* ── Today's class card ──────────────────────────────────────── */}
           <div className="lg:col-span-1 bg-slate-900 border border-slate-700/60 rounded-2xl p-5 shadow-lg shadow-black/30">
             {!isStudent && (
               <div className="mb-4">
@@ -113,7 +126,6 @@ const Dashboard = () => {
             )}
             <ShowTodaysClassInDashboard classes={todaysTimeTable} />
           </div>
-
         </div>
       </div>
     </div>
