@@ -288,10 +288,6 @@ export const getClassAttendanceData = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    if (!["teacher", "authority"].includes(reqUser.role)) {
-      return res.status(403).json({ message: "Access denied" });
-    }
-
     const classNo = parseInt(req.params.classNo as string, 10);
     if (isNaN(classNo)) {
       return res.status(400).json({ message: "Invalid classNo" });

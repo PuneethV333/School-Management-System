@@ -61,11 +61,6 @@ export const menuConfig: MenuConfig = {
                 path: "/students/mark/attendance",
                 icon: UserCheck,
             },
-            // Note: No route found for teacher attendance marking
-            // { name: "Mark Teacher Attendance", path: "/mark/attendance/teachers", icon: UserCheck },
-            // Note: No routes found for adding students/teachers
-            // { name: "Add New Student", path: "/add/student", icon: PlusCircle },
-            // { name: "Add New Teacher", path: "/add/teacher", icon: PlusCircle },
         ],
         "ADD MARKS": [
             {

@@ -33,8 +33,6 @@ const Student = () => {
     Record<string, AttendanceRecord>
   >({});
 
-//   const students = studentByClass;
-
   const handleMarkAll = (status: AttendanceStatus) => {
     const updated: Record<string, AttendanceRecord> = {};
     for (const s of students) {
