@@ -16,14 +16,14 @@ import { Ut as AddUtMarks } from "./pages/subPages/AddMarks/Ut";
 import { Exams as AddExamMarks } from "./pages/subPages/AddMarks/Exams";
 import { Main as ViewTeachers } from "./pages/subPages/view/Teachers/Main";
 import { Main as ViewStudents } from "./pages/subPages/view/Students/Main";
-import {Add as AddAnnouncement} from './pages/subPages/Announcement/Add'
-import {Main as TimeTable} from './pages/subPages/view/Timetable/Main'
-import {Main as Syllabus} from './pages/subPages/Syllabus/Main'
-import { Main as  TeacherProfile} from "./pages/subPages/Profile/TeacherProfile/Main";
-import { Main as  StudentProfile} from "./pages/subPages/Profile/Student/Main";
-import { Main as  Profile} from "./pages/subPages/Profile/My/Main";
-import {Page as AnnouncementsPage} from './pages/subPages/Announcement/Page'
-
+import { Add as AddAnnouncement } from "./pages/subPages/Announcement/Add";
+import { Main as TimeTable } from "./pages/subPages/view/Timetable/Main";
+import { Main as Syllabus } from "./pages/subPages/Syllabus/Main";
+import { Main as TeacherProfile } from "./pages/subPages/Profile/TeacherProfile/Main";
+import { Main as StudentProfile } from "./pages/subPages/Profile/Student/Main";
+import { Main as Profile } from "./pages/subPages/Profile/My/Main";
+import { Page as AnnouncementsPage } from "./pages/subPages/Announcement/Page";
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 
 const App = () => {
   const Login = lazy(() => import("./pages/Login"));
@@ -47,7 +47,14 @@ const App = () => {
             path="/login"
             element={userData ? <Navigate to="/" replace /> : <Login />}
           />
-          <Route path="/" element={<Home />}>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Dashboard />} />
             <Route path="my/attendance" element={<My />} />
             <Route path="students/attendance" element={<Students />} />
@@ -59,17 +66,17 @@ const App = () => {
             <Route path="add/exam" element={<AddExamMarks />} />
             <Route path="view/students" element={<ViewStudents />} />
             <Route path="view/teachers" element={<ViewTeachers />} />
-            <Route path="/add/announcement" element={<AddAnnouncement/>}/>
-            <Route path="/timetable" element={<TimeTable/>}/>
-            <Route path="/syllabus" element={<Syllabus/>}/>
+            <Route path="/add/announcement" element={<AddAnnouncement />} />
+            <Route path="/timetable" element={<TimeTable />} />
+            <Route path="/syllabus" element={<Syllabus />} />
             <Route
               path="announcements/:id"
               element={<AnnouncementsDetails />}
             />
-            
-             <Route path="announcements" element={<AnnouncementsPage />} />
-             <Route path="student/profile/:id" element={<StudentProfile />} />
-             <Route path="profile" element={<Profile/>} />
+
+            <Route path="announcements" element={<AnnouncementsPage />} />
+            <Route path="student/profile/:id" element={<StudentProfile />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="teacher/profile/:id" element={<TeacherProfile />} />
           </Route>
         </Routes>
