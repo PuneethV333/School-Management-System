@@ -24,7 +24,7 @@ const STATUS_STYLES: Record<AttendanceStatus, string> = {
 const Student = () => {
   const { data: userData, isPending: loading } = useFetchMe();
   const [classNo, setClassNo] = useState<number>(1);
-  const { data: studentByClass, isLoading: loadingStudentsData } =
+  const { data: students, isLoading: loadingStudentsData } =
     useFetchStudentsByClass(userData, classNo);
   const { mutate: markAttendance, isPending: markingAttendance } =
     useMarkStudentsAttendance();
@@ -33,7 +33,7 @@ const Student = () => {
     Record<string, AttendanceRecord>
   >({});
 
-  const students = studentByClass?.data ?? [];
+//   const students = studentByClass;
 
   const handleMarkAll = (status: AttendanceStatus) => {
     const updated: Record<string, AttendanceRecord> = {};
@@ -71,7 +71,7 @@ const Student = () => {
   const leaveCount = Object.values(attendance).filter(
     (a) => a.status === "LEAVE",
   ).length;
-  const unmarkedCount = students.length - Object.keys(attendance).length;
+  const unmarkedCount = students?.length - Object.keys(attendance).length;
 
   if (loading || loadingStudentsData) return <Spinner />;
 
