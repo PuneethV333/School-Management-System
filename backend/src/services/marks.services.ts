@@ -181,7 +181,7 @@ export const addExamServices = async (
     const academicYear = process.env.CURRENT_ACADEMIC_YEAR;
     if (!academicYear) throw new Error("Academic year not found");
 
-    const students = await Student.find({ classNo }).lean();
+    const students = await Student.find({ class:classNo }).lean();
     if (!students.length) throw new Error("No students found");
 
     const studentMap: Record<string, any> = {};

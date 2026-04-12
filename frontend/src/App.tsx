@@ -2,37 +2,71 @@ import { lazy, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useFetchMe } from "./hooks/useAuth";
 import Spinner from "./components/Spinner";
-import Home from "./pages/Home";
 import { Toaster } from "react-hot-toast";
-import Dashboard from "./pages/subPages/Dashboard";
-import My from "./pages/subPages/ViewAttendance/My";
-import Students from "./pages/subPages/ViewAttendance/Students";
-import Teachers from "./pages/subPages/ViewAttendance/Teachers";
-import Student from "./pages/subPages/MarkAttendance/Student";
-import Ut from "./pages/subPages/ViewMark/Ut";
-import Exam from "./pages/subPages/ViewMark/Exam";
-import { AnnouncementsDetails } from "./pages/subPages/Announcement/Details";
-import { Ut as AddUtMarks } from "./pages/subPages/AddMarks/Ut";
-import { Exams as AddExamMarks } from "./pages/subPages/AddMarks/Exams";
-import { Main as ViewTeachers } from "./pages/subPages/view/Teachers/Main";
-import { Main as ViewStudents } from "./pages/subPages/view/Students/Main";
-import { Add as AddAnnouncement } from "./pages/subPages/Announcement/Add";
-import { Main as TimeTable } from "./pages/subPages/view/Timetable/Main";
-import { Main as Syllabus } from "./pages/subPages/Syllabus/Main";
-import { Main as TeacherProfile } from "./pages/subPages/Profile/TeacherProfile/Main";
-import { Main as StudentProfile } from "./pages/subPages/Profile/Student/Main";
-import { Main as Profile } from "./pages/subPages/Profile/My/Main";
-import { Page as AnnouncementsPage } from "./pages/subPages/Announcement/Page";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 
+const Login = lazy(() => import("./pages/Login"));
+const Home = lazy(() => import("./pages/Home"));
+const Dashboard = lazy(() => import("./pages/subPages/Dashboard"));
+const My = lazy(() => import("./pages/subPages/ViewAttendance/My"));
+const Students = lazy(() => import("./pages/subPages/ViewAttendance/Students"));
+const Teachers = lazy(() => import("./pages/subPages/ViewAttendance/Teachers"));
+const Student = lazy(() => import("./pages/subPages/MarkAttendance/Student"));
+const Ut = lazy(() => import("./pages/subPages/ViewMark/Ut"));
+const Exam = lazy(() => import("./pages/subPages/ViewMark/Exam"));
+const AddUtMarks = lazy(() =>
+  import("./pages/subPages/AddMarks/Ut").then((m) => ({ default: m.Ut })),
+);
+const AddExamMarks = lazy(() =>
+  import("./pages/subPages/AddMarks/Exams").then((m) => ({ default: m.Exams })),
+);
+const ViewTeachers = lazy(() =>
+  import("./pages/subPages/view/Teachers/Main").then((m) => ({
+    default: m.Main,
+  })),
+);
+const ViewStudents = lazy(() =>
+  import("./pages/subPages/view/Students/Main").then((m) => ({
+    default: m.Main,
+  })),
+);
+const AddAnnouncement = lazy(() =>
+  import("./pages/subPages/Announcement/Add").then((m) => ({ default: m.Add })),
+);
+const AnnouncementsDetails = lazy(() =>
+  import("./pages/subPages/Announcement/Details").then((m) => ({
+    default: m.AnnouncementsDetails,
+  })),
+);
+const AnnouncementsPage = lazy(() =>
+  import("./pages/subPages/Announcement/Page").then((m) => ({
+    default: m.Page,
+  })),
+);
+const TimeTable = lazy(() =>
+  import("./pages/subPages/view/Timetable/Main").then((m) => ({
+    default: m.Main,
+  })),
+);
+const Syllabus = lazy(() =>
+  import("./pages/subPages/Syllabus/Main").then((m) => ({ default: m.Main })),
+);
+const TeacherProfile = lazy(() =>
+  import("./pages/subPages/Profile/TeacherProfile/Main").then((m) => ({
+    default: m.Main,
+  })),
+);
+const StudentProfile = lazy(() =>
+  import("./pages/subPages/Profile/Student/Main").then((m) => ({
+    default: m.Main,
+  })),
+);
+const Profile = lazy(() =>
+  import("./pages/subPages/Profile/My/Main").then((m) => ({ default: m.Main })),
+);
+
 const App = () => {
-  const Login = lazy(() => import("./pages/Login"));
-
   const { isPending, data: userData } = useFetchMe();
-
-  if (userData) {
-    console.log(userData);
-  }
 
   if (isPending) {
     return <Spinner />;
@@ -41,7 +75,7 @@ const App = () => {
   return (
     <>
       <Toaster position="top-right" />
-      <Suspense>
+      <Suspense fallback={<Spinner />}>
         <Routes>
           <Route
             path="/login"
@@ -73,7 +107,6 @@ const App = () => {
               path="announcements/:id"
               element={<AnnouncementsDetails />}
             />
-
             <Route path="announcements" element={<AnnouncementsPage />} />
             <Route path="student/profile/:id" element={<StudentProfile />} />
             <Route path="profile" element={<Profile />} />

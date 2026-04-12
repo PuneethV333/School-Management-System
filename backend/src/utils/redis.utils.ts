@@ -21,3 +21,20 @@ export const getVal = async (cacheToken: string) => {
   }
 };
 
+
+export const scanKeys = async (pattern: string): Promise<string[]> => {
+  const keys: string[] = [];
+  let cursor = "0";
+
+  do {
+    const result = await redisClient.scan(cursor, {
+      MATCH: pattern,
+      COUNT: 100,
+    });
+
+    cursor = result.cursor;
+    keys.push(...result.keys);
+  } while (cursor !== "0");
+
+  return keys;
+};

@@ -2,7 +2,7 @@ import { Response, Request } from "express";
 import { AuthToken } from "../middleware/auth.middleware";
 import { redisClient } from "../config/redis";
 import * as announcementServices from "../services/announcements.services";
-import { setValKey } from "../utils/redis.utils";
+import { scanKeys, setValKey } from "../utils/redis.utils";
 import { getError } from "../utils/error.utils";
 import { Attachment } from "../models/announcements.module";
 
@@ -112,7 +112,7 @@ export const postAnnouncements = async (req: Request, res: Response) => {
     });
 
     const pattern = `announcements:home:${academicYear}:*`;
-    const keys = await redisClient.keys(pattern);
+    const keys = await scanKeys(pattern);
 
     if (keys.length > 0) {
       await redisClient.del(keys);
