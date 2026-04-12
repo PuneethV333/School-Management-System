@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMemo } from "react";
 import {
   BarChart,
@@ -70,7 +69,7 @@ export const Attendance = ({ classAttendance, dataType }: AttendanceProps) => {
     }
 
     const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    const weeklyData: WeeklyDataPoint[] = currentWeek.days.map((day, index) => {
+    const weeklyData: WeeklyDataPoint[] = currentWeek.days.map((day) => {
       const date = new Date(day.date);
       const dayName = dayNames[date.getDay() === 0 ? 6 : date.getDay() - 1];
 
@@ -129,7 +128,12 @@ export const Attendance = ({ classAttendance, dataType }: AttendanceProps) => {
     return monthlyData;
   }, [classAttendance, dataType]);
 
-  const data = dataType === "weekly" ? processWeeklyData : processMonthlyData;
+  const data: WeeklyDataPoint[] | MonthlyDataPoint[] =
+    dataType === "weekly" ? processWeeklyData : processMonthlyData;
+
+  if (!data) {
+    return;
+  }
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -179,17 +183,9 @@ export const Attendance = ({ classAttendance, dataType }: AttendanceProps) => {
     return null;
   };
 
-  const getBarColor = (percentage: number, isHoliday?: boolean) => {
-    if (isHoliday) return "#475569";
-    if (percentage >= 90) return "#10b981";
-    if (percentage >= 75) return "#06b6d4";
-    if (percentage >= 60) return "#f59e0b";
-    return "#ef4444";
-  };
-
   if (!data || data.length === 0) {
     return (
-      <div className="flex items-center justify-center h-[400px] text-slate-400">
+      <div className="flex items-center justify-center h-100 text-slate-400">
         <div className="text-center">
           <div className="text-5xl mb-4">📊</div>
           <p className="text-lg font-semibold">No attendance data available</p>
@@ -204,7 +200,7 @@ export const Attendance = ({ classAttendance, dataType }: AttendanceProps) => {
   return (
     <div className="w-full h-full">
       <div className="mb-6">
-        <h2 className="text-2xl font-black bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-1">
+        <h2 className="text-2xl font-black bg-linear-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-1">
           Attendance Overview
         </h2>
         <p className="text-slate-400 text-sm">
@@ -216,7 +212,7 @@ export const Attendance = ({ classAttendance, dataType }: AttendanceProps) => {
 
       <ResponsiveContainer width="100%" height={350}>
         <BarChart
-          data={[data]}
+          data={data as any}
           margin={{ top: 20, right: 30, left: 0, bottom: 20 }}
         >
           <defs>
@@ -301,25 +297,25 @@ export const Attendance = ({ classAttendance, dataType }: AttendanceProps) => {
 
       <div className="mt-6 flex flex-wrap gap-4 justify-center">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-gradient-to-b from-emerald-500 to-emerald-600"></div>
+          <div className="w-4 h-4 rounded bg-linear-to-b from-emerald-500 to-emerald-600"></div>
           <span className="text-slate-300 text-xs font-medium">
             Excellent (90%+)
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-gradient-to-b from-cyan-500 to-cyan-600"></div>
+          <div className="w-4 h-4 rounded bg-linear-to-b from-cyan-500 to-cyan-600"></div>
           <span className="text-slate-300 text-xs font-medium">
             Good (75-89%)
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-gradient-to-b from-amber-500 to-amber-600"></div>
+          <div className="w-4 h-4 rounded bg-linear-to-b from-amber-500 to-amber-600"></div>
           <span className="text-slate-300 text-xs font-medium">
             Average (60-74%)
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-gradient-to-b from-red-500 to-red-600"></div>
+          <div className="w-4 h-4 rounded bg-linear-to-b from-red-500 to-red-600"></div>
           <span className="text-slate-300 text-xs font-medium">
             Needs Attention (&lt;60%)
           </span>
